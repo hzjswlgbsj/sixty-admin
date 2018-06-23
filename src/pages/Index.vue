@@ -47,5 +47,10 @@ export default {
   .main-layout-structure-container {
     height: 100%;
     width: 100%;
+    .main-layout-structure-topbar {
+    }
+    .main-layout-structure-content {
+      display: flex;
+    }
   }
 </style>

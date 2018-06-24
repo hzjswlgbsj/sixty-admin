@@ -10,7 +10,8 @@ export default {
 }
 </script>
 
-<style>
+<style lang="scss">
+@import "../src/style/base/base.scss";
 body {
   height: 100%;
   width: 100%;
@@ -21,13 +22,14 @@ body {
   left: 0;
   right: 0;
   position: absolute;
+  font-size: $font-size;
 }
 #app {
   font-family: 'Avenir', Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
-  color: #2c3e50;
+  color: $font-other-color;
   height: 100%;
 }
 </style>

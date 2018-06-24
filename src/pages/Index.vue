@@ -7,7 +7,9 @@
       <div class="main-layout-structure-sidebar">
         <side-bar></side-bar>
       </div>
-      <router-view></router-view>
+      <div class="main-layout-main-content">
+        <router-view></router-view>
+      </div>
     </div>
     <!--<div class="main-layout-structure-footbar">
       <foot-bar></foot-bar>
@@ -44,6 +46,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+  @import "../style/base/base";
   .main-layout-structure-container {
     height: 100%;
     width: 100%;
@@ -51,6 +54,11 @@ export default {
     }
     .main-layout-structure-content {
       display: flex;
+      .main-layout-structure-sidebar {}
+      .main-layout-main-content {
+        color: $theme-background-color;
+        padding: 24px;
+      }
     }
   }
 </style>

@@ -56,6 +56,7 @@ export default {
       display: flex;
       .main-layout-structure-sidebar {}
       .main-layout-main-content {
+        width: 100%;
         color: $theme-background-color;
         padding: 24px;
       }

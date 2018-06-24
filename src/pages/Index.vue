@@ -11,9 +11,9 @@
         <router-view></router-view>
       </div>
     </div>
-    <!--<div class="main-layout-structure-footbar">
-      <foot-bar></foot-bar>
-    </div>-->
+    <div class="main-layout-structure-footbar">
+      <!--<foot-bar></foot-bar>-->
+    </div>
   </div>
 </template>
 
@@ -60,6 +60,9 @@ export default {
         color: $theme-background-color;
         padding: 24px;
       }
+    }
+    .main-layout-structure-footbar {
+      margin-top: -20px;
     }
   }
 </style>

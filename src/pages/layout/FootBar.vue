@@ -20,6 +20,12 @@ export default {
 <style lang="scss" scoped>
   @import "../../style/base/base";
   .footbar-container {
+    width: 100%;
+    height: 60px;
+    background-color: $theme-bar-color;
+    display: flex;
+    justify-content: center;
+    align-items: center;
     .footbar-right-content {
       color: $font-color;
       font-size: $font-size;

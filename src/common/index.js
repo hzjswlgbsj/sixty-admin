@@ -42,3 +42,5 @@ export const Url = url
  * @name Query
  */
 export const Query = query
+
+export { Http } from './network'

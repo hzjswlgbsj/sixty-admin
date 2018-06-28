@@ -1,7 +1,7 @@
 /**
  * @module packages/common/Url
  */
-import { Query } from 'packages/common'
+import { Query } from '../index'
 
 /**
  * 获取所有地址参数
@@ -36,11 +36,11 @@ export function urlEncode (clearString) {
 
   while (x < clearString.length) {
     var match = regex.exec(clearString.substr(x))
-    if (match != null && match.length > 1 && match[1] != '') {
+    if (match != null && match.length > 1 && match[1] !== '') {
       output += match[1]
       x += match[1].length
     } else {
-      if (clearString[x] == ' ') output += '+'
+      if (clearString[x] === ' ') output += '+'
       else {
         var charCode = clearString.charCodeAt(x)
         var hexVal = charCode.toString(16)
@@ -125,14 +125,14 @@ export function urlDecode (encodedString) {
   while (
     (match = myregexp.exec(output)) != null &&
     match.length > 1 &&
-    match[1] != ''
+    match[1] !== ''
   ) {
     binVal = parseInt(match[1].substr(1), 16)
     thisString = String.fromCharCode(binVal)
     output = output.replace(match[1], thisString)
   }
 
-  //output = utf8to16(output);
+  // output = utf8to16(output);
   output = output.replace(/\\+/g, ' ')
   output = utf8to16(output)
   return output

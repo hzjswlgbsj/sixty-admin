@@ -2,33 +2,29 @@
  * @module packages/common/Api
  */
 
-import { Http, Global, Log } from 'packages/common'
-import { redirectLogin } from 'packages/account'
-const TAG = 'common/api'
+import { Http } from '../index'
 
 function _api2url (api) {
   const domain = process.env.API_DOMAIN
   const apiArr = api.split('.')
 
   if (apiArr.length < 2) {
-    throw `error api ${api}`
+    console.error(`error api ${api}`)
   }
 
   if (apiArr.length === 2) {
-    return `${domian}/main.php/json/${apiArr[0]}/apiArr[1]`
+    return `${domain}/${apiArr[0]}/${apiArr[1]}`
   }
 
   if (apiArr.length === 3) {
-    return `${domain}/${apiArr[0]}/main.php/json/${apiArr[1]}/${apiArr[2]}`
+    return `${domain}/${apiArr[0]}/${apiArr[1]}/${apiArr[2]}`
   }
 
   if (apiArr.length > 3) {
-    return `${domian}/${apiArr[0]}/main.php/${apiArr[1]}/${apiArr[2]}/${
+    return `${domain}/${apiArr[0]}/${apiArr[1]}/${apiArr[2]}/${
       apiArr[3]
     }.json`
   }
-
-  return url
 }
 
 /**
@@ -45,27 +41,26 @@ function _call (api, params) {
 
   return Http.post(url, p).then(response => {
     if (!response || !response.data) {
-      return Promise.reject({
-        code: -1,
-        msg: 'network error reponse'
-      })
+      return Promise.reject(new Error(
+        {
+          code: -1,
+          msg: 'network error reponse'
+        }
+      ))
     }
 
     const data = response.data
     if (!data || typeof data !== 'object' || !data.hasOwnProperty('ret')) {
-      return Promise.reject({
-        code: -1,
-        msg: 'network error format'
-      })
+      return Promise.reject(new Error(
+        {
+          code: -1,
+          msg: 'network error format'
+        }
+      ))
     }
 
     if (data.ret && data.ret === 1) {
       return Promise.resolve(data.data)
-    }
-
-    if (data.msg === 'not login' || data.code === -7 || data.code === -2000) {
-      redirectLogin()
-      return
     }
 
     return Promise.reject(data)
@@ -77,7 +72,6 @@ function _params (params) {
     params = {}
   }
 
-  params.token = Global.token
   return params
 }
 

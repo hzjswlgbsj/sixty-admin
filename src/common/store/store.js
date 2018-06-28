@@ -1,6 +1,7 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 import STATE from './state'
+import _ from 'lodash'
 
 Vue.use(Vuex)
 

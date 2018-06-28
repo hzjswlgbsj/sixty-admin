@@ -5,10 +5,12 @@
 </template>
 
 <script>
+import { getArticles } from '../services/article'
 export default {
   name: 'Article',
   data () {
     return {
+      articles: [],
       columns1: [
         {
           title: 'Name',
@@ -49,6 +51,14 @@ export default {
           date: '2016-10-04'
         }
       ]
+    }
+  },
+  created () {
+    this.initData()
+  },
+  methods: {
+    async initData () {
+      this.articles = await getArticles()
     }
   }
 }

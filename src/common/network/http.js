@@ -1,6 +1,5 @@
 import axios from 'axios'
 import qs from 'qs'
-import { Log } from 'packages/common'
 
 const TAG = 'HTTP'
 
@@ -18,7 +17,7 @@ function post (url, params) {
       timeout: 10000
     })
     .catch(e => {
-      Log.error(TAG, e)
+      console.error(TAG, e)
     })
 }
 

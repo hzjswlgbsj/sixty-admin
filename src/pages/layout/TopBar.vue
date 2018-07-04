@@ -1,6 +1,8 @@
 <template>
   <div class="topbar">
-    <div class="topbar-logo">Sixty's Den</div>
+    <div class="topbar-logo">
+      <a href="http://www.sixtyden.com" target="_blank">Sixty's Den</a>
+    </div>
     <div class="topbar-theme">
       首页 > 文章管理 > 文章列表
     </div>

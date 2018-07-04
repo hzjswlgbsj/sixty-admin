@@ -1,0 +1,87 @@
+<template>
+  <div class="common-form-container">
+    <Form
+      class="common-form"
+      label-position="top">
+      <single-form
+        :form="item"
+        v-model="formData[item.key]"
+        v-for="(item, idx) in formDefine"
+        :key="idx"
+        @on-change="change"/>
+    </Form>
+  </div>
+</template>
+
+<script>
+  import SingleForm from '../components/SingleForm'
+  import { Log } from 'packages/common'
+
+  const TAG = 'service/document'
+
+  export default {
+    name: 'FormView',
+
+    components: {
+      SingleForm
+    },
+
+    props: {
+      value: {
+        type: Object,
+        default: () => {}
+      },
+      tableConfig: {
+        type: Object,
+        default: () => {}
+      }
+    },
+
+    data () {
+      return {
+        formData: this.value,
+        formDefine: [],
+      }
+    },
+
+    created () {
+      this.formDefine = this.getFormDefine()
+    },
+
+    watch: {
+      value (val) {
+        this.formData = val
+      }
+    },
+
+    computed: {
+      fromDefine () {
+        return this.tableConfig
+      }
+    },
+
+    methods: {
+      change () {
+        this.$emit('input', this.formData)
+        this.$emit('on-change', this.formData)
+      },
+      getFormDefine () {
+        if (this.fromDefine.form && _.isArray(this.fromDefine.form)) {
+          return this.fromDefine.form
+        } else {
+          return []
+        }
+      }
+    }
+  }
+</script>
+<style scoped>
+  .common-form-container {
+    width: 100%;
+  }
+  .common-form {
+    overflow: hidden;
+    overflow-y: auto;
+    width: 100%;
+  }
+</style>

@@ -13,13 +13,11 @@
   </div>
 </template>
 <script>
-import CommonMavonEditor from '../CommonMavonEditor'
 import FormView from './FormView'
 
 export default {
   name: 'CommonTableAddModal',
   components: {
-    CommonMavonEditor,
     FormView
   },
   props: {
@@ -50,7 +48,7 @@ export default {
           { required: true, message: '类型必填', trigger: 'blur' }
         ],
         desc: [
-          { required: true, message: '请填写描述', trigger: 'blur' },
+          { required: true, message: '请填写描述', trigger: 'blur' }
         ]
       }
     }

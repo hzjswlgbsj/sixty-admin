@@ -25,12 +25,11 @@
 </template>
 
 <script>
-import { Global, Api, Log, Message } from 'packages/common'
+import { Api } from '../common'
 import { uploadByBase64 } from '../services/upload'
 import { mavonEditor } from 'mavon-editor'
-import 'mavon-editor/dist/css/index.css'
+// import 'mavon-editor/dist/css/index.css'
 
-const TAG = 'packages/common'
 export default {
   name: 'CommonMavonEditor',
   components: {
@@ -55,7 +54,7 @@ export default {
       currentValue: this.value,
       currentLanguage: this.language,
       toolbars: this.toolbarDefine,
-      action: Api.api2url('admin.upload.upload_file'),
+      action: Api.api2url('admin.upload.upload_file')
     }
   },
   watch: {
@@ -65,9 +64,7 @@ export default {
   },
   computed: {
     actionData: function () {
-      let token = Global.token
       return {
-        token: token
       }
     }
   },
@@ -93,13 +90,12 @@ export default {
      */
     async uploadImgFromPaste (pos, file) {
       let dataBase64 = file.miniurl
-      let appkey = Global.appkey
-      let ret = await uploadByBase64(dataBase64, appkey) // 改成你自己的上传接口
+      let ret = await uploadByBase64(dataBase64) // 改成你自己的上传接口
       if (ret && ret.data && ret.data.url) {
-        Message.success('图片上传成功')
+        this.$Message.success('图片上传成功')
         return ret.data.url
       } else {
-        Message.error('图片上传失败，请重新操作')
+        this.$Message.error('图片上传失败，请重新操作')
         this.$refs.mavonEditor.$imgDelByFilename(pos)
       }
     },
@@ -115,9 +111,9 @@ export default {
       if (response && response.data) {
         let src = response.data.data.url
         this.currentValue += `[${file.name}](${src})`
-        Message.success('文件上传成功')
+        this.$Message.success('文件上传成功')
       } else {
-        Message.error('图片上传成功')
+        this.$Message.error('图片上传成功')
       }
     },
     setCurrentValue (value) {

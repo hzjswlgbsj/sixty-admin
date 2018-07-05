@@ -15,41 +15,41 @@
   </div>
 </template>
 <script>
-  import { mavonEditor } from 'mavon-editor'
+import { mavonEditor } from 'mavon-editor'
 
-  export default {
-    name: 'CommonTableViewModal',
-    components: {
-      mavonEditor
+export default {
+  name: 'CommonTableViewModal',
+  components: {
+    mavonEditor
+  },
+  props: {
+    content: {
+      type: String,
+      default: ''
     },
-    props: {
-      content: {
-        type: String,
-        default: ''
-      },
-      value: {
-        type: Boolean,
-        default: false
-      }
+    value: {
+      type: Boolean,
+      default: false
+    }
+  },
+  data () {
+    return {
+      visible: this.value,
+      viewContent: this.content
+    }
+  },
+  watch: {
+    value (val) {
+      this.visible = val
     },
-    data () {
-      return {
-        visible: this.value,
-        viewContent: this.content
-      }
+    content (val) {
+      this.viewContent = val
     },
-    watch: {
-      value (val) {
-        this.visible = val
-      },
-      content (val) {
-        this.viewContent = val
-      },
-      visible (val) {
-        this.$emit('input', val)
-      }
+    visible (val) {
+      this.$emit('input', val)
     }
   }
+}
 </script>
 
 <style lang="sass" scoped>

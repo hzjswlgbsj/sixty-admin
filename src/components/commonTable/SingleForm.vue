@@ -78,90 +78,87 @@
 </template>
 
 <script>
-  import Form from '../const/form'
-  import CommonMavonEditor from '../components/CommonMavonEditor'
-  import { Log } from 'packages/common'
+import Form from '../../const/form'
+import CommonMavonEditor from '../CommonMavonEditor'
 
-  const TAG = 'service/document'
-  export default {
-    name: 'SingleForm',
+export default {
+  name: 'SingleForm',
 
-    components: {
-      CommonMavonEditor
+  components: {
+    CommonMavonEditor
+  },
+
+  props: {
+    value: {
+      type: String,
+      default: ''
     },
+    form: {
+      type: Object,
+      default: () => {}
+    }
+  },
 
-    props: {
-      value: {
-        type: String,
-        default: ''
-      },
-      form: {
-        type: Object,
-        default: () => {}
+  data () {
+    return {
+      mData: '',
+      mForm: this.form,
+      formConst: Form,
+      toolbars: {
+        bold: true, // 粗体
+        italic: true, // 斜体
+        header: true, // 标题
+        quote: true, // 引用
+        ol: true, // 有序列表
+        ul: true, // 无序列表
+        code: true, // code
+        subfield: true, // 单双栏模式
+        preview: true, // 预览
+        trash: true, // 清空
+        help: true
       }
-    },
+    }
+  },
 
-    data () {
-      return {
-        mData: '',
-        mForm: this.form,
-        formConst: Form,
-        toolbars: {
-          bold: true, // 粗体
-          italic: true, // 斜体
-          header: true, // 标题
-          quote: true, // 引用
-          ol: true, // 有序列表
-          ul: true, // 无序列表
-          code: true, // code
-          subfield: true, // 单双栏模式
-          preview: true, // 预览
-          trash: true, // 清空
-          help: true
-        }
+  created () {
+
+  },
+
+  methods: {
+    isCommon (form) {
+      return Form.COMMON_FORMS.indexOf(form.type) >= 0
+    },
+    change () {
+      if (this.mForm.type === Form.FORM_TYPE_ARRAY || this.mForm.type === Form.FORM_TYPE_OBJECT) {
+        this.$emit('input', JSON.parse(this.mData))
+        this.$emit('on-change', JSON.parse(this.mData))
+      } else {
+        this.$emit('input', this.mData)
+        this.$emit('on-change', this.mData)
       }
-    },
+    }
+  },
 
-    created () {
-
-    },
-
-    methods: {
-      isCommon (form) {
-        return Form.COMMON_FORMS.indexOf(form.type) >= 0
-      },
-      change () {
-        if (this.mForm.type === Form.FORM_TYPE_ARRAY || this.mForm.type === Form.FORM_TYPE_OBJECT) {
-          this.$emit('input', JSON.parse(this.mData))
-          this.$emit('on-change', JSON.parse(this.mData))
+  watch: {
+    value: {
+      deep: true,
+      handler: function (v) {
+        if (this.form.type === Form.FORM_TYPE_ARRAY || this.form.type === Form.FORM_TYPE_OBJECT) {
+          this.mData = JSON.stringify(v)
         } else {
-          this.$emit('input', this.mData)
-          this.$emit('on-change', this.mData)
+          this.mData = v
         }
-
+        // this.mData = v
       }
     },
-
-    watch: {
-      value: {
-        deep: true,
-        handler: function (v) {
-          if (this.form.type === Form.FORM_TYPE_ARRAY || this.form.type === Form.FORM_TYPE_OBJECT) {
-            this.mData = JSON.stringify(v)
-          } else {
-            this.mData = v
-          }
-          // this.mData = v
-        }
-      },
-      form: {
-        deep: true,
-        handler: function (v) {
-          this.mForm = v
-        }
+    form: {
+      deep: true,
+      handler: function (v) {
+        this.mForm = v
       }
     }
   }
+}
 </script>
 <style scoped>
   .commonediter {

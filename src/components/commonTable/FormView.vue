@@ -14,66 +14,64 @@
 </template>
 
 <script>
-  import SingleForm from '../components/SingleForm'
-  import { Log } from 'packages/common'
+import SingleForm from './SingleForm'
+import _ from 'lodash'
 
-  const TAG = 'service/document'
+export default {
+  name: 'FormView',
 
-  export default {
-    name: 'FormView',
+  components: {
+    SingleForm
+  },
 
-    components: {
-      SingleForm
+  props: {
+    value: {
+      type: Object,
+      default: () => {}
     },
+    tableConfig: {
+      type: Object,
+      default: () => {}
+    }
+  },
 
-    props: {
-      value: {
-        type: Object,
-        default: () => {}
-      },
-      tableConfig: {
-        type: Object,
-        default: () => {}
-      }
+  data () {
+    return {
+      formData: this.value,
+      formDefine: []
+    }
+  },
+
+  created () {
+    this.formDefine = this.getFormDefine()
+  },
+
+  watch: {
+    value (val) {
+      this.formData = val
+    }
+  },
+
+  computed: {
+    fromDefine () {
+      return this.tableConfig
+    }
+  },
+
+  methods: {
+    change () {
+      this.$emit('input', this.formData)
+      this.$emit('on-change', this.formData)
     },
-
-    data () {
-      return {
-        formData: this.value,
-        formDefine: [],
-      }
-    },
-
-    created () {
-      this.formDefine = this.getFormDefine()
-    },
-
-    watch: {
-      value (val) {
-        this.formData = val
-      }
-    },
-
-    computed: {
-      fromDefine () {
-        return this.tableConfig
-      }
-    },
-
-    methods: {
-      change () {
-        this.$emit('input', this.formData)
-        this.$emit('on-change', this.formData)
-      },
-      getFormDefine () {
-        if (this.fromDefine.form && _.isArray(this.fromDefine.form)) {
-          return this.fromDefine.form
-        } else {
-          return []
-        }
+    getFormDefine () {
+      if (this.fromDefine.form && _.isArray(this.fromDefine.form)) {
+        return this.fromDefine.form
+      } else {
+        return []
       }
     }
   }
+}
 </script>
 <style scoped>
   .common-form-container {

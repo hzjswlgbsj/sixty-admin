@@ -13,3 +13,19 @@ export async function getArticles () {
     console.error(e)
   }
 }
+
+export async function addArticle () {
+  try {
+    return await getArticle()
+  } catch (e) {
+    console.error(e)
+  }
+}
+
+export async function delArticle () {
+  try {
+    return await getArticle()
+  } catch (e) {
+    console.error(e)
+  }
+}

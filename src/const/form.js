@@ -1,0 +1,58 @@
+/**
+ * Created by WebStorm.
+ * User: liulin
+ * Date: 2018/7/5
+ * Time: 上午10:21
+ */
+
+const FORM_TYPE_STRING = 'string'
+const FORM_TYPE_ENUM = 'enum'
+const FORM_TYPE_DATE = 'date'
+const FORM_TYPE_INTEGER = 'integer'
+const FORM_TYPE_BOOLEAN = 'boolean'
+const FORM_TYPE_COLOR = 'color'
+const FORM_TYPE_COMPONENT = 'component'
+const FORM_TYPE_API = 'api'
+const FORM_TYPE_TEXTAREA = 'textarea'
+const FORM_TYPE_OBJECT = 'object'
+const FORM_TYPE_ARRAY = 'array'
+const FORM_TYPE_NUMBER = 'number'
+const FORM_TYPE_FUNCTION = 'function'
+const FORM_TYPE_ICON = 'icon'
+const FORM_TYPE_MARKDOWN = 'markdown'
+
+const COMMON_FORMS = [
+  FORM_TYPE_STRING,
+  FORM_TYPE_INTEGER,
+  FORM_TYPE_NUMBER,
+  FORM_TYPE_ENUM,
+  FORM_TYPE_BOOLEAN,
+  FORM_TYPE_COMPONENT,
+  FORM_TYPE_COLOR,
+  FORM_TYPE_API,
+  FORM_TYPE_ICON,
+  FORM_TYPE_ARRAY,
+  FORM_TYPE_OBJECT,
+  FORM_TYPE_MARKDOWN
+]
+
+export default {
+  // 表单类型
+  FORM_TYPE_STRING,
+  FORM_TYPE_ENUM,
+  FORM_TYPE_DATE,
+  FORM_TYPE_INTEGER,
+  FORM_TYPE_BOOLEAN,
+  FORM_TYPE_COLOR,
+  FORM_TYPE_COMPONENT,
+  FORM_TYPE_API,
+  FORM_TYPE_TEXTAREA,
+  FORM_TYPE_OBJECT,
+  FORM_TYPE_ARRAY,
+  FORM_TYPE_NUMBER,
+  FORM_TYPE_FUNCTION,
+  FORM_TYPE_ICON,
+  FORM_TYPE_MARKDOWN,
+
+  COMMON_FORMS
+}

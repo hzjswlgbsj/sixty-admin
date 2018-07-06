@@ -35,6 +35,7 @@ import CommonTableViewModal from './CommonTableViewModal'
 import CommonTableAddModal from './CommonTableAddModal'
 import { getArticles, addArticle, delArticle } from '../../services/article'
 import _ from 'lodash'
+
 export default {
   name: 'CommonTable',
   components: {
@@ -214,6 +215,6 @@ export default {
 }
 </script>
 
-<style lang="sass" scoped>
+<style lang="scss" scoped>
 
 </style>

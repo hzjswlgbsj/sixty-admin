@@ -4,14 +4,17 @@
       ref="mavonEditor"
       @imgAdd="imgAdd"
       @change="contentChange"
-      :toolbars-flag="true"
+      :toolbars-flag="toolbarsFlag"
+      :toolbars="toolbars"
       :subfield="false"
-      default-open="edit"
-      code-style="androidstudio"
+      :default-open="defaultOpen"
+      :code-style="codeStyle"
       :box-shadow="false"
       v-model="currentValue"
       placeholder="说点什么吧"/>
-    <div class="common-mavon-editor-upload">
+    <div
+      v-if="defaultOpen === 'edit'"
+      class="common-mavon-editor-upload">
       <Upload
         :action="action"
         :data="actionData"
@@ -33,7 +36,7 @@ import { mavonEditor } from 'mavon-editor'
 export default {
   name: 'CommonMavonEditor',
   components: {
-    'mavon-editor': mavonEditor
+    mavonEditor
   },
   props: {
     value: {
@@ -47,6 +50,18 @@ export default {
     toolbarDefine: {
       type: Object,
       default: () => {}
+    },
+    defaultOpen: {
+      type: String,
+      default: 'edit'
+    },
+    codeStyle: {
+      type: String,
+      default: 'androidstudio'
+    },
+    toolbarsFlag: {
+      type: Boolean,
+      default: true
     }
   },
   data () {
@@ -124,7 +139,7 @@ export default {
 }
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
   .common-mavon-editor {
     border: 1px solid #E4E4E4;
     border-radius: 5px;

@@ -76,5 +76,6 @@ function _params (params) {
 }
 
 export default {
-  call: _call
+  call: _call,
+  api2url: _api2url
 }

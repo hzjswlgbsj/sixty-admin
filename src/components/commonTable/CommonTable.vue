@@ -12,35 +12,31 @@
       border
       stripe
       :columns="config.columns"
-      :data="tableData" />
+      :data="remoteData" />
 
     <!--添加和编辑模板的modal-->
-    <common-table-add-modal
+    <CommonTableAddModal
       v-model="addModal"
       :add-button-loading="addButtonLoading"
       :form-data="dataForm"
       :config="config"
-      @add-event-handle="handleAddTemplate"/>
+      @add-event-handle="executeAddEvent"/>
 
     <!--查看模板的modal-->
     <common-table-view-modal
       v-model="viewModal"
-      :content="curTemplate.content"/>
+      :content="curData.content"/>
   </div>
 </template>
 <script>
-import { mavonEditor } from 'mavon-editor'
-import CommonMavonEditor from '../CommonMavonEditor'
 import CommonTableViewModal from './CommonTableViewModal'
 import CommonTableAddModal from './CommonTableAddModal'
-import { getArticles, addArticle, delArticle } from '../../services/article'
+import { getRemoteData, updateData, deleteData } from '../../services'
 import _ from 'lodash'
 
 export default {
   name: 'CommonTable',
   components: {
-    mavonEditor,
-    CommonMavonEditor,
     CommonTableViewModal,
     CommonTableAddModal
   },
@@ -60,9 +56,9 @@ export default {
       addButtonLoading: true,
       viewModal: false,
       curId: 0,
-      curTemplate: {},
+      curData: {},
       dataForm: {},
-      tableData: [],
+      remoteData: [],
       operationColumn: {
         title: '操作',
         render: (h, params) => {
@@ -87,7 +83,7 @@ export default {
               },
               on: {
                 'on-ok': () => {
-                  this.executedeleteEvent(params.row.id)
+                  this.executeDeleteEvent(params.row.id)
                 }
               }
             }, [
@@ -140,12 +136,9 @@ export default {
   },
   methods: {
     async initData () {
-      this.tableData = await getArticles()
-      console.log(2222222222)
-      console.log(this.tableData)
-      console.log(2222222222)
+      this.remoteData = await getRemoteData()
     },
-    async handleAddTemplate (addForm) {
+    async executeAddEvent (addForm) {
       this.dataForm = addForm
       if (!addForm.type) {
         this.$Message.error('请填写类型')
@@ -168,23 +161,23 @@ export default {
       this.config.form.map((item) => {
         params[item.key] = this.dataForm[item.key]
       })
-      let ret = await addArticle(params)
+      let ret = await updateData(params)
       if (ret) {
-        this.$Message.success('添加模板成功')
+        this.$Message.success('添加成功')
         this.initData()
         this.addModal = false
       } else {
         this.$Message.error('添加失败')
       }
     },
-    async executedeleteEvent (id) {
+    async executeDeleteEvent (id) {
       if (!id) {
         this.$Message.error('参数错误')
         return
       }
-      let ret = await delArticle(id)
+      let ret = await deleteData(id)
       if (ret) {
-        this.$Message.success('删除模板成功')
+        this.$Message.success('删除成功')
         this.initData()
       } else {
         this.$Message.error('删除失败')
@@ -202,11 +195,11 @@ export default {
     handleEditEvent (id) {
       this.addModal = true
       this.setCurTempById(id)
-      this.dataForm = this.curTemplate
+      this.dataForm = this.curData
     },
     setCurTempById (id) {
       this.curId = id
-      this.curTemplate = _.find(this.tableData, {id: this.curId})
+      this.curData = _.find(this.remoteData, {id: this.curId})
     },
     cleanForm () {
       this.dataForm = {}
@@ -215,6 +208,6 @@ export default {
 }
 </script>
 
-<style lang="scss" scoped>
+<style lang="sass" scoped>
 
 </style>

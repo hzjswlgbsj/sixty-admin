@@ -1,4 +1,4 @@
-import form from '../../const/form'
+import form from '../const/form'
 
 /**
  * Created by WebStorm.
@@ -11,7 +11,7 @@ export default {
   apis: [
     {
       type: 'all', // 类型，用于区分是什么类型的接口
-      name: 'admin.doctp.all', // 接口字符串
+      name: 'article.all', // 接口字符串
       params: [
         {
           name: 'id',
@@ -22,15 +22,15 @@ export default {
     },
     {
       type: 'add',
-      name: 'admin.doctp.add'
+      name: 'article.add'
     },
     {
       type: 'update',
-      name: 'admin.doctp.update'
+      name: 'article.update'
     },
     {
       type: 'delete',
-      name: 'admin.doctp.delete'
+      name: 'article.delete'
     }
   ],
   columns: [
@@ -52,7 +52,7 @@ export default {
     },
     {
       title: '创建时间',
-      key: 'created_at'
+      key: 'create_time'
     }
   ],
   form: [

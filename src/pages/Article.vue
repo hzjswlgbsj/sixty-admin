@@ -8,7 +8,7 @@
 
 <script>
 import CommonTable from '../components/commonTable/CommonTable'
-import tableConfig from './config'
+import tableConfig from '../config'
 export default {
   name: 'Article',
   components: {

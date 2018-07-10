@@ -35,8 +35,9 @@ export default {
   ],
   columns: [
     {
-      title: '编号',
-      key: 'id'
+      type: 'index',
+      width: 60,
+      align: 'center'
     },
     {
       title: '标题',
@@ -47,7 +48,7 @@ export default {
       key: 'nickname'
     },
     {
-      title: '作者',
+      title: '标签',
       key: 'tag_ids'
     },
     {

@@ -31,7 +31,7 @@
 import { Api } from '../common'
 import { uploadByBase64 } from '../services/upload'
 import { mavonEditor } from 'mavon-editor'
-// import 'mavon-editor/dist/css/index.css'
+import 'mavon-editor/dist/css/index.css'
 
 export default {
   name: 'CommonMavonEditor',

@@ -23,5 +23,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-
+  .article-list {
+    text-align: left;
+  }
 </style>

@@ -1,5 +1,5 @@
 <template>
-  <div class="sidebar" :style="sideHeight">
+  <div class="sidebar">
     <Menu theme="dark" accordion
                class="sidebar-menu"
                :open-names="currentOpens"
@@ -32,14 +32,6 @@ export default {
       currentOpens: [0]
     }
   },
-  computed: {
-    sideHeight () {
-      let clientHeight = document.body.clientHeight - 60
-      return {
-        height: `${clientHeight}px`
-      }
-    }
-  },
   methods: {
     handleChange (path) {
       this.activePath = path
@@ -54,6 +46,7 @@ export default {
 
 <style lang="scss" scoped>
   .sidebar {
+    height: 100%;
     .sidebar-menu {
       height: 100%;
       margin-left: -30px;

@@ -21,6 +21,7 @@
 import TopBar from './layout/TopBar'
 import FootBar from './layout/FootBar'
 import SideBar from './layout/SideBar'
+
 export default {
   name: 'Index',
   components: {
@@ -34,13 +35,11 @@ export default {
   },
   computed: {
     contentHeight () {
-      let clientHeight = document.body.clientHeight - 60
+      let clientHeight = document.documentElement.clientHeight - 60
       return {
         height: `${clientHeight}px`
       }
     }
-  },
-  methods: {
   }
 }
 </script>
@@ -57,8 +56,10 @@ export default {
       .main-layout-structure-sidebar {}
       .main-layout-main-content {
         width: 100%;
+        height: 100%;
         color: $theme-background-color;
         padding: 24px;
+        overflow-y: scroll;
       }
     }
     .main-layout-structure-footbar {

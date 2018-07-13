@@ -25,5 +25,6 @@ export default {
 <style lang="scss" scoped>
   .article-list {
     text-align: left;
+    height: 100%;
   }
 </style>

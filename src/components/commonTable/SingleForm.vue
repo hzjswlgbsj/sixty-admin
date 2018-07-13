@@ -22,7 +22,7 @@
         placeholder="请输入" />
       <i-input
         @on-change=change
-        v-if="mForm.type === formConst.FORM_TYPE_ARRAY || mForm.type === formConst.FORM_TYPE_OBJECT"
+        v-if="mForm.type === formConst.FORM_TYPE_ARRAY || mForm.type === formConst.FORM_TYPE_OBJECT || mForm.type === formConst.FORM_TYPE_TEXTAREA"
         v-model="mData"
         type="textarea"
         placeholder="请输入" />
@@ -64,11 +64,25 @@
       </i-switch>
 
       <common-mavon-editor
-        class="service-document-content-markdown"
         @on-content-change="change"
         v-if="mForm.type === formConst.FORM_TYPE_MARKDOWN"
         v-model="mData"
         :toolbar-define="toolbars"/>
+
+      <sixty-tag
+        @on-content-change="change"
+        v-if="mForm.type === formConst.FORM_TYPE_TAG"
+        v-model="mData"/>
+
+      <Upload
+        class="common-upload"
+        :action="action"
+        :data="actionData"
+        v-if="mForm.type === formConst.FORM_TYPE_UPLOAD"
+        :on-success="handleSuccess">
+        <Icon type="image" />
+        <span class="common-upload-text">上传文件</span>
+      </Upload>
 
     </FormItem>
     <div v-else>
@@ -78,14 +92,18 @@
 </template>
 
 <script>
+import { Api } from '../../common'
+import { uploadByBase64 } from '../../services/upload'
 import Form from '../../const/form'
 import CommonMavonEditor from '../CommonMavonEditor'
+import SixtyTag from '../SixtyTag'
 
 export default {
   name: 'SingleForm',
 
   components: {
-    CommonMavonEditor
+    CommonMavonEditor,
+    SixtyTag
   },
 
   props: {
@@ -116,12 +134,20 @@ export default {
         preview: true, // 预览
         trash: true, // 清空
         help: true
-      }
+      },
+      action: Api.api2url('admin.upload.upload_file')
     }
   },
 
   created () {
 
+  },
+
+  computed: {
+    actionData: function () {
+      return {
+      }
+    }
   },
 
   methods: {
@@ -135,6 +161,15 @@ export default {
       } else {
         this.$emit('input', this.mData)
         this.$emit('on-change', this.mData)
+      }
+    },
+    handleSuccess (response, file) {
+      if (response && response.data) {
+        let src = response.data.data.url
+        this.currentValue += `[${file.name}](${src})`
+        this.$Message.success('文件上传成功')
+      } else {
+        this.$Message.error('图片上传成功')
       }
     }
   },
@@ -170,5 +205,14 @@ export default {
   .commonediter-desc {
     max-width: 200px;
     white-space: normal;
+  }
+  .common-upload {
+    cursor: pointer;
+    font-size: 14px;
+    color: #1B69B6;
+    text-align: right;
+    margin: 0 20px;
+    border-top: 1px solid #E4E4E4;
+    height: 33px;
   }
 </style>

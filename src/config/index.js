@@ -58,18 +58,33 @@ export default {
   ],
   form: [
     {
-      key: 'type',
-      label: '模板类型:',
+      key: 'title',
+      label: '文章标题:',
       type: form.FORM_TYPE_STRING
     },
     {
-      key: 'desc',
-      label: '模板描述:',
+      key: 'nickname',
+      label: '文章作者:',
       type: form.FORM_TYPE_STRING
+    },
+    {
+      key: 'tag',
+      label: '文章标签:',
+      type: form.FORM_TYPE_TAG
+    },
+    {
+      key: 'introduction',
+      label: '文章简介:',
+      type: form.FORM_TYPE_TEXTAREA
+    },
+    {
+      key: 'cover_picture',
+      label: '文章封面:',
+      type: form.FORM_TYPE_UPLOAD
     },
     {
       key: 'content',
-      label: '模板内容',
+      label: '文章内容:',
       type: form.FORM_TYPE_MARKDOWN
     }
   ]

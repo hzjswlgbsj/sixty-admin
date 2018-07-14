@@ -118,7 +118,7 @@ export default {
     },
     tagsData (val) {
       if (val) {
-        this.array1InArray2(this.tagsData , this.tagsLocal, 'id')
+        this.array1InArray2(this.tagsData, this.tagsLocal, 'id')
         this.allTags = val
         this.tagsDataBack = val
       }
@@ -134,7 +134,7 @@ export default {
          1.点击事件的对象不是目标区域本身
          2.事件对象同时也不是目标区域的子元素
       */
-      document.addEventListener('click',  (e) => {
+      document.addEventListener('click', (e) => {
         let modalEvent = this.$refs.tagModel // 设置目标区域
         if (modalEvent && !modalEvent.isEqualNode(e.target) && !modalEvent.contains(e.target)) {
           this.showAddModal = false
@@ -154,7 +154,7 @@ export default {
           }
         }
       }
-      this.array1InArray2(this.tagsData , this.tagsLocal, 'id')
+      this.array1InArray2(this.tagsData, this.tagsLocal, 'id')
       this.allTags = this.tagsData
       this.setTagsNotUse()
       this.tagsDataBack = this.tagsData
@@ -169,7 +169,7 @@ export default {
         }
         let alltags = this.allTags
         this.allTags = alltags && alltags.filter(item => {
-          if(item.name.indexOf(this.searchTag) >= 0) {
+          if (item.name.indexOf(this.searchTag) >= 0) {
             return true
           } else {
             return false
@@ -305,7 +305,7 @@ export default {
         }
       }
       for (let arr of arr1) {
-        if (arr[by] && ArrayTool.isInArray(arr[by],byArr)) {
+        if (arr[by] && ArrayTool.isInArray(arr[by], byArr)) {
           arr.existInItem = true
         }
       }

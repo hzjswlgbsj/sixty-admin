@@ -1,27 +1,18 @@
 <template>
   <div class="article-list">
-    <!--<CommonTable-->
-      <!--add-title="添加模板"-->
-      <!--:table-config="config"/>-->
-    <sixty-tag
-      tagsname="添加标签"
-      :tag-ids.sync="taskLocalCategory"
-      :tags-data="taskCategory"
-      @add-origin-tag="addOriginTag"
-      @delete-origin-tag="deleteOriginTag"
-      @edit-origin-tag="editOriginTag"/>
+    <CommonTable
+      add-title="添加模板"
+      :table-config="config"/>
   </div>
 </template>
 
 <script>
 import CommonTable from '../components/commonTable/CommonTable'
-import SixtyTag from '../components/SixtyTag'
 import tableConfig from '../config'
 export default {
   name: 'Article',
   components: {
-    CommonTable,
-    SixtyTag
+    CommonTable
   },
   data () {
     return {

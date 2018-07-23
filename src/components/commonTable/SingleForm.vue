@@ -70,9 +70,13 @@
         :toolbar-define="toolbars"/>
 
       <sixty-tag
-        @on-content-change="change"
         v-if="mForm.type === formConst.FORM_TYPE_TAG"
-        v-model="mData"/>
+        tagsname="添加标签"
+        :tag-ids="mData"
+        @update="change"
+        @add-origin-tag="addOriginTag"
+        @delete-origin-tag="deleteOriginTag"
+        @edit-origin-tag="editOriginTag"/>
 
       <Upload
         class="common-upload"
@@ -151,6 +155,15 @@ export default {
   },
 
   methods: {
+    async addOriginTag () {
+      console.log('点击了添加')
+    },
+    async editOriginTag () {
+      console.log('点击了编辑')
+    },
+    async deleteOriginTag () {
+      console.log('点击了删除')
+    },
     isCommon (form) {
       return Form.COMMON_FORMS.indexOf(form.type) >= 0
     },

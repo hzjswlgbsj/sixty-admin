@@ -72,8 +72,10 @@
       <sixty-tag
         class="common-form-tag"
         v-if="mForm.type === formConst.FORM_TYPE_TAG"
+        multiple
         add-tags-text="添加标签"
         :tag-ids="mData"
+        :tags-data="tagsData"
         @update="change"
         @add-origin-tag="addOriginTag"
         @delete-origin-tag="deleteOriginTag"
@@ -101,6 +103,7 @@ import { Api } from '../../common'
 import Form from '../../const/form'
 import CommonMavonEditor from '../CommonMavonEditor'
 import SixtyTag from '../SixtyTag'
+import { getRemoteTag } from '../../services/tag'
 
 export default {
   name: 'SingleForm',
@@ -139,12 +142,13 @@ export default {
         trash: true, // 清空
         help: true
       },
-      action: Api.api2url('admin.upload.upload_file')
+      action: Api.api2url('admin.upload.upload_file'),
+      tagsData: []
     }
   },
 
   created () {
-
+    this.initData()
   },
 
   computed: {
@@ -155,6 +159,13 @@ export default {
   },
 
   methods: {
+    async initData () {
+      this.tagsData = await this.getTags()
+    },
+    async getTags () {
+      let tags = await getRemoteTag()
+      return tags
+    },
     async addOriginTag () {
       console.log('点击了添加')
     },

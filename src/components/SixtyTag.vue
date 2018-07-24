@@ -309,7 +309,7 @@ export default {
         }
       }
       for (let arr of arr1) {
-        if (arr[by] && _.isInArray(arr[by], byArr)) {
+        if (arr[by] && byArr.indexOf(arr[by]) !== -1) {
           arr.existInItem = true
         }
       }

@@ -70,8 +70,9 @@
         :toolbar-define="toolbars"/>
 
       <sixty-tag
+        class="common-form-tag"
         v-if="mForm.type === formConst.FORM_TYPE_TAG"
-        tagsname="添加标签"
+        add-tags-text="添加标签"
         :tag-ids="mData"
         @update="change"
         @add-origin-tag="addOriginTag"
@@ -79,13 +80,13 @@
         @edit-origin-tag="editOriginTag"/>
 
       <Upload
-        class="common-upload"
+        class="common-form-upload"
         :action="action"
         :data="actionData"
         v-if="mForm.type === formConst.FORM_TYPE_UPLOAD"
         :on-success="handleSuccess">
         <Icon type="image" />
-        <span class="common-upload-text">上传文件</span>
+        <span class="common-form-upload-text">上传文件</span>
       </Upload>
 
     </FormItem>
@@ -97,7 +98,6 @@
 
 <script>
 import { Api } from '../../common'
-import { uploadByBase64 } from '../../services/upload'
 import Form from '../../const/form'
 import CommonMavonEditor from '../CommonMavonEditor'
 import SixtyTag from '../SixtyTag'
@@ -219,7 +219,7 @@ export default {
     max-width: 200px;
     white-space: normal;
   }
-  .common-upload {
+  .common-form-upload {
     cursor: pointer;
     font-size: 14px;
     color: #1B69B6;
@@ -227,5 +227,8 @@ export default {
     margin: 0 20px;
     border-top: 1px solid #E4E4E4;
     height: 33px;
+  }
+  .common-form-tag {
+    margin-left: 10px;
   }
 </style>

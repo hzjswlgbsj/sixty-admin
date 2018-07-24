@@ -1,7 +1,7 @@
 <template>
   <div>
     <div>
-      <span class="comp_tags_addTxt" v-if="tagsLocal && tagsLocal.length < 1" @click="addLocalTag">{{tagsname}}</span>
+      <span class="comp_tags_addTxt" v-if="tagsLocal && tagsLocal.length < 1" @click="addLocalTag">{{addTagsText}}</span>
       <span class="comp_tags_Txt"
             v-else
             v-for="(tag, idx) in tagsLocal"
@@ -17,10 +17,10 @@
 
     <div class="tags_model" ref="tagModel" v-if="showAddModal">
       <!--选择界面的内容（默认显示）-->
-      <div v-if="showSeletContent">
+      <div v-if="showSelectContent">
         <div class="search_container">
           <div class="search_input">
-            <input v-model="searchTag" @input="searchtags" placeholder="搜索标签" />
+            <input v-model="searchTag" @input="searchTags" placeholder="搜索标签" />
           </div>
           <div>
             <Icon class="search_add_icon" type="ios-plus-outline" @click.native="addTag" size="18"></Icon>
@@ -43,15 +43,15 @@
           </ul>
 
           <div v-if="allTags && allTags.length < 1" class="add_tag_btn" style="margin-top: 20px">
-            <button class="tag_operation_add_btn" type="button" @click="searchtagSubmit">创建</button>
+            <button class="tag_operation_add_btn" type="button" @click="searchTagSubmit">创建</button>
           </div>
         </div>
       </div>
       <!--添加界面的内容-->
-      <div v-if="!showSeletContent">
+      <div v-if="!showSelectContent">
         <div class="add_operation_btn">
           <Icon style="color: #A9A9A9" type="chevron-left" @click.native="returnSelectTag"></Icon>
-          {{pannelText}}
+          {{panelText}}
           <Icon style="color: #A9A9A9" type="close-round" @click.native="closeSelectModal"></Icon>
         </div>
         <div style="margin: 20px;">
@@ -71,22 +71,26 @@
 </template>
 
 <script>
-import ArrayTool from '../util/array'
+import _ from 'lodash'
+
 export default {
   name: 'SixtyTag',
   props: {
-    multiple: false,
-    tagIds: {
-      type: Array,
-      defalut: () => []
+    multiple: {
+      type: Boolean,
+      default: false
     },
-    tagsname: {
+    tagIds: {
       type: String,
-      defalut: '添加标签'
+      default: ''
+    },
+    addTagsText: {
+      type: String,
+      default: '添加标签'
     },
     tagsData: {
       type: Array,
-      defalut: () => []
+      default: () => []
     }
   },
   data () {
@@ -97,9 +101,9 @@ export default {
       addTagName: '',
       addTagId: '',
       showTips: false,
-      showSeletContent: true,
+      showSelectContent: true,
       currentEditIdx: -1,
-      pannelText: '新建标签',
+      panelText: '新建标签',
       searchTag: '',
       allTags: [],
       tagsDataBack: []
@@ -146,9 +150,9 @@ export default {
     /* 初始化本地标签集合 */
     initTagsData () {
       this.tagsLocal = []
-      if (ArrayTool.isArray(this.tagIds) && this.tagIds.length > 0) {
+      if (_.isArray(this.tagIds) && this.tagIds.length > 0) {
         for (let tagId of this.tagIds) {
-          let ret = ArrayTool.filterItem('id', tagId, this.tagsData)
+          let ret = _.find(this.tagsData, {id: tagId})
           if (ret && ret.id) {
             this.tagsLocal.push(ret)
           }
@@ -160,7 +164,7 @@ export default {
       this.tagsDataBack = this.tagsData
     },
     /* 搜索本地标签 */
-    searchtags () {
+    searchTags () {
       if (!this.searchTag) {
         this.allTags = this.tagsData ? this.tagsData : this.tagsDataBack
       } else {
@@ -180,17 +184,17 @@ export default {
     /* 添加本地标签 */
     addLocalTag (e) {
       this.showAddModal = true
-      this.showSeletContent = true
+      this.showSelectContent = true
     },
     /* 添加源数据标签 */
     addTag (e) {
       this.searchTag ? this.addTagName = this.searchTag : this.addTagName = ''
-      this.showSeletContent = false
+      this.showSelectContent = false
     },
     /* 编辑源数据标签 */
     editTag (tag) {
-      this.showSeletContent = false
-      this.pannelText = '编辑标签'
+      this.showSelectContent = false
+      this.panelText = '编辑标签'
       this.addTagId = tag.id
       this.addTagName = tag.name
     },
@@ -228,7 +232,7 @@ export default {
       }
       this.$emit('on-change', this.tagsLocal)
     },
-    searchtagSubmit () {
+    searchTagSubmit () {
       if (this.searchTag) {
         this.$emit('add-origin-tag', this.searchTag)
         this.searchTag = ''
@@ -271,18 +275,18 @@ export default {
     },
     /* 返回选择tag的列表页面 */
     returnSelectTag () {
-      this.showSeletContent = true
+      this.showSelectContent = true
       this.showTips = false
-      this.pannelText = '新建标签'
+      this.panelText = '新建标签'
       this.addTagId = ''
       this.addTagName = ''
     },
     /* 关闭整个tag的modal */
     closeSelectModal () {
       this.showAddModal = false
-      this.showSeletContent = true
+      this.showSelectContent = true
       this.showTips = false
-      this.pannelText = '新建标签'
+      this.panelText = '新建标签'
       this.addTagId = ''
       this.addTagName = ''
     },
@@ -295,7 +299,7 @@ export default {
     },
     /* 通过by字段判定arr1中有哪些项目存在于arr2中，并给存在于arr2中的arr1的那一项数据加上属性和值existInItem:true */
     array1InArray2 (arr1, arr2, by) {
-      if (!ArrayTool.isArray(arr1) || !ArrayTool.isArray(arr2)) {
+      if (!_.isArray(arr1) || !_.isArray(arr2)) {
         return
       }
       let byArr = [] // 存放arr2的by字段集合
@@ -305,7 +309,7 @@ export default {
         }
       }
       for (let arr of arr1) {
-        if (arr[by] && ArrayTool.isInArray(arr[by], byArr)) {
+        if (arr[by] && _.isInArray(arr[by], byArr)) {
           arr.existInItem = true
         }
       }

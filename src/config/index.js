@@ -68,7 +68,7 @@ export default {
       type: form.FORM_TYPE_STRING
     },
     {
-      key: 'tag',
+      key: 'tag_ids',
       label: '文章标签:',
       type: form.FORM_TYPE_TAG
     },

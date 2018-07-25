@@ -11,3 +11,17 @@ export function getTag (id) {
     id
   })
 }
+
+export function addTag (name, color, id) {
+  return Api.call('tag.add', {
+    name,
+    color,
+    id
+  })
+}
+
+export function deleteTag (id) {
+  return Api.call('tag.del', {
+    id
+  })
+}

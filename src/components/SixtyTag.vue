@@ -72,6 +72,7 @@
 
 <script>
 import _ from 'lodash'
+import { Message } from '../common'
 
 export default {
   name: 'SixtyTag',
@@ -80,7 +81,7 @@ export default {
       type: Boolean,
       default: false
     },
-    tagIds: {
+    value: {
       type: String,
       default: ''
     },
@@ -105,13 +106,14 @@ export default {
       currentEditIdx: -1,
       panelText: '新建标签',
       searchTag: '',
-      allTags: [],
-      tagsDataBack: []
+      allTags: this.tagsData,
+      tagIds: this.value
     }
   },
   created () {
     this.initTagsData()
   },
+  computed: {},
   watch: {
     addTagName (val) {
       if (val) {
@@ -120,15 +122,21 @@ export default {
         this.showTips = true
       }
     },
+    value (val) {
+      this.tagIds = val
+    },
     tagsData (val) {
       if (val) {
-        this.array1InArray2(this.tagsData, this.tagsLocal, 'id')
         this.allTags = val
-        this.tagsDataBack = val
+        this.array1InArray2(this.allTags, this.tagsLocal, 'id')
       }
     },
     tagsLocal (val) {
-      this.$emit('update:tagIds', val)
+      let idsArray = this.getTagIds(val)
+      this.tagIds = idsArray.join(',')
+    },
+    tagIds (val) {
+      this.$emit('input', val)
     }
   },
   mounted: function () {
@@ -150,34 +158,23 @@ export default {
     /* 初始化本地标签集合 */
     initTagsData () {
       this.tagsLocal = []
-      if (_.isArray(this.tagIds) && this.tagIds.length > 0) {
-        for (let tagId of this.tagIds) {
-          let ret = _.find(this.tagsData, {id: tagId})
+      const tagIdsArray = this.tagIds.split(',')
+      if (tagIdsArray.length > 0) {
+        for (let tagId of tagIdsArray) {
+          let ret = _.find(this.allTags, {id: tagId})
           if (ret && ret.id) {
             this.tagsLocal.push(ret)
           }
         }
       }
-      this.array1InArray2(this.tagsData, this.tagsLocal, 'id')
-      this.allTags = this.tagsData
+      this.array1InArray2(this.allTags, this.tagsLocal, 'id')
       this.setTagsNotUse()
-      this.tagsDataBack = this.tagsData
     },
     /* 搜索本地标签 */
     searchTags () {
-      if (!this.searchTag) {
-        this.allTags = this.tagsData ? this.tagsData : this.tagsDataBack
-      } else {
-        if (this.tagsData) {
-          this.allTags = this.tagsData
-        }
-        let alltags = this.allTags
-        this.allTags = alltags && alltags.filter(item => {
-          if (item.name.indexOf(this.searchTag) >= 0) {
-            return true
-          } else {
-            return false
-          }
+      if (this.searchTag) {
+        this.allTags = this.allTags && this.allTags.filter(item => {
+          return item.name.indexOf(this.searchTag) !== -1
         })
       }
     },
@@ -243,9 +240,9 @@ export default {
       if (!this.addTagName) {
         this.showTips = true
       } else {
-        for (let i = 0; i < this.tagsData.length; i++) {
-          if (this.tagsData[i].name === this.addTagName) {
-            alert('重复了')
+        for (let i = 0; i < this.allTags.length; i++) {
+          if (this.allTags[i].name === this.addTagName) {
+            Message.error('该标签已经存在')
             return
           }
         }
@@ -289,6 +286,12 @@ export default {
       this.panelText = '新建标签'
       this.addTagId = ''
       this.addTagName = ''
+    },
+    /* 获取tagIds */
+    getTagIds (tags) {
+      return tags.map((item) => {
+        return item.id
+      })
     },
     setTagsNotUse () {
       if (this.allTags && this.allTags.length > 0) {

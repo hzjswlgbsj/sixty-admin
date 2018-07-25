@@ -74,9 +74,9 @@
         v-if="mForm.type === formConst.FORM_TYPE_TAG"
         multiple
         add-tags-text="添加标签"
-        :tag-ids="mData"
+        v-model="mData"
         :tags-data="tagsData"
-        @update="change"
+        @on-change="change"
         @add-origin-tag="addOriginTag"
         @delete-origin-tag="deleteOriginTag"
         @edit-origin-tag="editOriginTag"/>
@@ -103,7 +103,7 @@ import { Api } from '../../common'
 import Form from '../../const/form'
 import CommonMavonEditor from '../CommonMavonEditor'
 import SixtyTag from '../SixtyTag'
-import { getRemoteTag } from '../../services/tag'
+import { getRemoteTag, addRemoteTag, delRemoteTag } from '../../services/tag'
 
 export default {
   name: 'SingleForm',
@@ -113,16 +113,7 @@ export default {
     SixtyTag
   },
 
-  props: {
-    value: {
-      type: String,
-      default: ''
-    },
-    form: {
-      type: Object,
-      default: () => {}
-    }
-  },
+  props: ['value', 'form'],
 
   data () {
     return {
@@ -168,17 +159,20 @@ export default {
     },
     async addOriginTag () {
       console.log('点击了添加')
+      await addRemoteTag()
     },
     async editOriginTag () {
       console.log('点击了编辑')
+      await addRemoteTag()
     },
     async deleteOriginTag () {
       console.log('点击了删除')
+      await delRemoteTag()
     },
     isCommon (form) {
       return Form.COMMON_FORMS.indexOf(form.type) >= 0
     },
-    change () {
+    change (data) {
       if (this.mForm.type === Form.FORM_TYPE_ARRAY || this.mForm.type === Form.FORM_TYPE_OBJECT) {
         this.$emit('input', JSON.parse(this.mData))
         this.$emit('on-change', JSON.parse(this.mData))

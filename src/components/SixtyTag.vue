@@ -107,6 +107,7 @@ export default {
       panelText: '新建标签',
       searchTag: '',
       allTags: this.tagsData,
+      allTagsBack: this.tagsData,
       tagIds: this.value
     }
   },
@@ -128,6 +129,7 @@ export default {
     tagsData (val) {
       if (val) {
         this.allTags = val
+        this.allTagsBack = val
         this.array1InArray2(this.allTags, this.tagsLocal, 'id')
       }
     },
@@ -173,9 +175,12 @@ export default {
     /* 搜索本地标签 */
     searchTags () {
       if (this.searchTag) {
-        this.allTags = this.allTags && this.allTags.filter(item => {
+        let allTags = this.allTagsBack
+        this.allTags = allTags && allTags.filter(item => {
           return item.name.indexOf(this.searchTag) !== -1
         })
+      } else {
+        this.allTags = this.allTagsBack
       }
     },
     /* 添加本地标签 */
@@ -231,7 +236,10 @@ export default {
     },
     searchTagSubmit () {
       if (this.searchTag) {
-        this.$emit('add-origin-tag', this.searchTag)
+        this.$emit('add-origin-tag', {
+          addTagColor: 'red',
+          addTagName: this.searchTag
+        })
         this.searchTag = ''
       }
     },
@@ -246,10 +254,18 @@ export default {
             return
           }
         }
+
         if (this.addTagId) {
-          this.$emit('edit-origin-tag', this.addTagId, this.addTagName)
+          this.$emit('edit-origin-tag', {
+            addTagId: this.addTagId,
+            addTagColor: 'red',
+            addTagName: this.addTagName
+          })
         } else {
-          this.$emit('add-origin-tag', this.addTagName)
+          this.$emit('add-origin-tag', {
+            addTagColor: 'red',
+            addTagName: this.addTagName
+          })
         }
         this.returnSelectTag()
       }

@@ -18,7 +18,8 @@ export async function getRemoteTag (id) {
 export async function addRemoteTag (name, color, id) {
   try {
     let ret = await addTag(name, color, id)
-    ret && Message.error('添加成功')
+    ret && Message.success('添加成功')
+    return ret
   } catch (e) {
     Message.error(e.msg)
     console.error(e)
@@ -29,6 +30,7 @@ export async function delRemoteTag (id) {
   try {
     let ret = await deleteTag(id)
     ret && Message.error('删除成功')
+    return ret
   } catch (e) {
     Message.error(e.msg)
     console.error(e)

@@ -151,23 +151,22 @@ export default {
 
   methods: {
     async initData () {
-      this.tagsData = await this.getTags()
+       await this.initTags()
     },
-    async getTags () {
-      let tags = await getRemoteTag()
-      return tags
+    async initTags () {
+      this.tagsData = await getRemoteTag()
     },
-    async addOriginTag () {
-      console.log('点击了添加')
-      await addRemoteTag()
+    async addOriginTag (data) {
+      let ret = await addRemoteTag(data.addTagName, data.addTagColor)
+      ret && await this.initTags()
     },
-    async editOriginTag () {
-      console.log('点击了编辑')
-      await addRemoteTag()
+    async editOriginTag (data) {
+      let ret = await addRemoteTag(data.addTagName, data.addTagColor, data.addTagId)
+      ret && await this.initTags()
     },
-    async deleteOriginTag () {
-      console.log('点击了删除')
-      await delRemoteTag()
+    async deleteOriginTag (id) {
+      let ret = await delRemoteTag(id)
+      ret && await this.initTags()
     },
     isCommon (form) {
       return Form.COMMON_FORMS.indexOf(form.type) >= 0

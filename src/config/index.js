@@ -21,16 +21,12 @@ export default {
       ]
     },
     {
-      type: 'add',
+      type: 'update',
       name: 'article.add'
     },
     {
-      type: 'update',
-      name: 'article.update'
-    },
-    {
       type: 'delete',
-      name: 'article.delete'
+      name: 'article.del'
     }
   ],
   columns: [

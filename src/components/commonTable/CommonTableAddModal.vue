@@ -62,6 +62,9 @@ export default {
     value (val) {
       this.visible = val
     },
+    addButtonLoading (val) {
+      this.addModalLoading = val
+    },
     visible (val) {
       this.$emit('input', val)
     },

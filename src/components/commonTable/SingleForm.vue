@@ -151,7 +151,7 @@ export default {
 
   methods: {
     async initData () {
-       await this.initTags()
+      await this.initTags()
     },
     async initTags () {
       this.tagsData = await getRemoteTag()

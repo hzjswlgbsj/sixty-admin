@@ -140,18 +140,8 @@ export default {
     },
     async executeAddEvent (addForm) {
       this.dataForm = addForm
-      if (!addForm.type) {
-        this.$Message.error('请填写类型')
-        this.addButtonLoading = false
-        return
-      }
-      if (!addForm.desc) {
-        this.$Message.error('请填写描述')
-        this.addButtonLoading = false
-        return
-      }
-      if (!addForm.content) {
-        this.$Message.error('请填写内容')
+      if (!addForm.title || !addForm.introduction || !addForm.content) {
+        this.$Message.error('请填写必填字段')
         this.addButtonLoading = false
         return
       }
@@ -168,6 +158,7 @@ export default {
         this.addModal = false
       } else {
         this.$Message.error('添加失败')
+        this.addModal = false
       }
     },
     async executeDeleteEvent (id) {

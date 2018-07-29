@@ -4,7 +4,8 @@
  * Date: 2018/6/24
  * Time: 下午5:30
  */
-import { getArticle } from '../apis/article'
+import { getArticle, addArticle, deleteArticle } from '../apis/article'
+import { Message } from '../common'
 
 export async function getArticles () {
   try {
@@ -14,17 +15,21 @@ export async function getArticles () {
   }
 }
 
-export async function addArticle () {
+export async function articleAdd (title, categoryId, introduction, nickname, coverPicture, content, tagIds, id) {
   try {
-    return await getArticle()
+    let ret = await addArticle(title, categoryId, introduction, nickname, coverPicture, content, tagIds, id)
+    ret && Message.success('添加成功')
+    return ret
   } catch (e) {
     console.error(e)
   }
 }
 
-export async function delArticle () {
+export async function articleDelete (id) {
   try {
-    return await getArticle()
+    let ret = await deleteArticle(id)
+    ret && Message.success('删除成功')
+    return ret
   } catch (e) {
     console.error(e)
   }

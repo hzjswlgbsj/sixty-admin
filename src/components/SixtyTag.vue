@@ -139,6 +139,7 @@ export default {
     },
     tagIds (val) {
       this.$emit('input', val)
+      this.$emit('on-change', val)
     }
   },
   mounted: function () {
@@ -232,7 +233,6 @@ export default {
         tag.existInItem = true
         this.tagsLocal.push(tag)
       }
-      this.$emit('on-change', this.tagsLocal)
     },
     searchTagSubmit () {
       if (this.searchTag) {

@@ -37,13 +37,8 @@ export default {
 
   data () {
     return {
-      formData: this.value,
-      formDefine: []
+      formData: this.value
     }
-  },
-
-  created () {
-    this.formDefine = this.getFormDefine()
   },
 
   watch: {
@@ -53,8 +48,12 @@ export default {
   },
 
   computed: {
-    fromDefine () {
-      return this.tableConfig
+    formDefine () {
+      if (this.tableConfig.form && _.isArray(this.tableConfig.form)) {
+        return this.tableConfig.form
+      } else {
+        return []
+      }
     }
   },
 
@@ -62,13 +61,6 @@ export default {
     change () {
       this.$emit('input', this.formData)
       this.$emit('on-change', this.formData)
-    },
-    getFormDefine () {
-      if (this.fromDefine.form && _.isArray(this.fromDefine.form)) {
-        return this.fromDefine.form
-      } else {
-        return []
-      }
     }
   }
 }

@@ -130,6 +130,7 @@ export default {
       if (val) {
         this.allTags = val
         this.allTagsBack = val
+        this.initTagsData()
         this.array1InArray2(this.allTags, this.tagsLocal, 'id')
       }
     },
@@ -138,6 +139,7 @@ export default {
       this.tagIds = idsArray.join(',')
     },
     tagIds (val) {
+      this.initTagsData()
       this.$emit('input', val)
       this.$emit('on-change', val)
     }
@@ -171,7 +173,7 @@ export default {
         }
       }
       this.array1InArray2(this.allTags, this.tagsLocal, 'id')
-      this.setTagsNotUse()
+      // this.setTagsNotUse()
     },
     /* 搜索本地标签 */
     searchTags () {
@@ -288,15 +290,14 @@ export default {
     },
     /* 返回选择tag的列表页面 */
     returnSelectTag () {
-      this.showSelectContent = true
-      this.showTips = false
-      this.panelText = '新建标签'
-      this.addTagId = ''
-      this.addTagName = ''
+      this.cleanVariable()
     },
     /* 关闭整个tag的modal */
     closeSelectModal () {
       this.showAddModal = false
+      this.cleanVariable()
+    },
+    cleanVariable () {
       this.showSelectContent = true
       this.showTips = false
       this.panelText = '新建标签'

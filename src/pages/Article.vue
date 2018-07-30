@@ -1,7 +1,7 @@
 <template>
   <div class="article-list">
     <CommonTable
-      add-title="添加模板"
+      add-title="文章"
       :table-config="config"/>
   </div>
 </template>

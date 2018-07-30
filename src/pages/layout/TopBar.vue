@@ -54,6 +54,7 @@ export default {
       width: 100%;
       text-align: left;
       padding-left: 24px;
+      color: $font-color
     }
     .topbar-user {
       font-size: 1em;

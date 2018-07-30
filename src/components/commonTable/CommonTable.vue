@@ -1,11 +1,10 @@
 <template>
   <div class="common-table">
-    <div class="document-template-add">
-      <Button
-        type="primary"
-        @click="handleAdd">
-        {{ addTitle }}
-      </Button>
+    <div class="common-table-add">
+      <div class="common-table-add-text">{{ addTitle }}列表</div>
+      <div>
+        <Button type="primary" @click="handleAdd">添加{{ addTitle }}</Button>
+      </div>
     </div>
     <!--table-->
     <Table
@@ -14,7 +13,7 @@
       :columns="config.columns"
       :data="remoteData" />
 
-    <!--添加和编辑模板的modal-->
+    <!--添加和编辑的modal-->
     <CommonTableAddModal
       v-model="addModal"
       :add-button-loading="addButtonLoading"
@@ -22,7 +21,7 @@
       :config="config"
       @add-event-handle="executeAddEvent"/>
 
-    <!--查看模板的modal-->
+    <!--查看的modal-->
     <common-table-view-modal
       v-model="viewModal"
       :content="curData.content"/>
@@ -199,6 +198,15 @@ export default {
 }
 </script>
 
-<style lang="sass" scoped>
-
+<style lang="scss" scoped>
+  .common-table-add {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+    .common-table-add-text {
+      font-size: 16px;
+      margin-top: 3px;
+    }
+  }
 </style>

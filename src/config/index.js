@@ -83,5 +83,15 @@ export default {
       label: '文章内容:',
       type: form.FORM_TYPE_MARKDOWN
     }
+    /* 这是select的示例配置 */
+    // {
+    //   key: 'category',
+    //   label: '模板类型:',
+    //   type: form.FORM_TYPE_ENUM,
+    //   options: [
+    //     {label: '服务文档模板', value: 'service'},
+    //     {label: 'gitlab模板', value: 'gitlab'}
+    //   ]
+    // }
   ]
 }

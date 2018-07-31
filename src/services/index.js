@@ -7,8 +7,10 @@
 
 import { all, update, del } from '../apis'
 
-export async function getRemoteData (filter) {
+export async function getRemoteData (page, limit, filter) {
   let params = {
+    page,
+    limit,
     filter
   }
   try {

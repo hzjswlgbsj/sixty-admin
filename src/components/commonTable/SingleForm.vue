@@ -45,14 +45,14 @@
         placeholder="请选择">
         <Option
           v-if="typeof value != 'object'"
-          v-for="(value, key) in mForm.values"
+          v-for="(value, key) in mForm.options"
           :key="key"
           :value="value">{{ value }}</Option>
         <Option
-          v-if="typeof value == 'object'"
-          v-for="(value, key) in mForm.values"
+          v-if="typeof option == 'object'"
+          v-for="(option, key) in mForm.options"
           :key="key"
-          :value="value.value">{{ value.label }}</Option>
+          :value="option.value">{{ option.label }}</Option>
       </Select>
       <i-switch
         @on-change=change
@@ -224,10 +224,9 @@ export default {
       }
     },
     handleSuccess (response) {
-      console.log('图片上传成功response', response)
+      console.log('图片上传成功', response)
       if (response) {
-        let src = response.url
-        this.currentValue += `[${response.name}](${src})`
+        this.currentValue += `[${response.name}](${response.url})`
         this.$Message.success('图片上传成功')
       } else {
         this.$Message.error('图片上传失败')

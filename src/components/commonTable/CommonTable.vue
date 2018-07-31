@@ -12,7 +12,17 @@
       stripe
       :columns="config.columns"
       :data="remoteData" />
-
+    <!-- pagenation 分页 -->
+    <div>
+      <Page
+        class="common-table-page"
+        :current="page"
+        @on-change="changePage"
+        :total="Number(total)"
+        :page-size="limit"
+        show-elevator
+        v-if="Number(total) > limit"/>
+    </div>
     <!--添加和编辑的modal-->
     <CommonTableAddModal
       v-model="addModal"
@@ -31,6 +41,7 @@
 import CommonTableViewModal from './CommonTableViewModal'
 import CommonTableAddModal from './CommonTableAddModal'
 import { getRemoteData, updateData, deleteData } from '../../services'
+import { DOCUMENT_LIMIT, DOCUMENT_PAGE } from '../../const'
 import _ from 'lodash'
 
 export default {
@@ -51,6 +62,9 @@ export default {
   },
   data () {
     return {
+      page: DOCUMENT_PAGE,
+      limit: DOCUMENT_LIMIT,
+      total: 0,
       addModal: false,
       addButtonLoading: true,
       viewModal: false,
@@ -133,9 +147,16 @@ export default {
       return tableConfig
     }
   },
+  watch: {
+    page (val) {
+      this.initData()
+    }
+  },
   methods: {
     async initData () {
-      this.remoteData = await getRemoteData()
+      let ret = await getRemoteData(this.page, this.limit)
+      this.remoteData = ret.items
+      this.total = ret.total
     },
     async executeAddEvent (addForm) {
       this.dataForm = addForm
@@ -144,13 +165,8 @@ export default {
         this.addButtonLoading = false
         return
       }
-      let params = {
-        id: this.curId
-      }
-      this.config.form.map((item) => {
-        params[item.key] = this.dataForm[item.key]
-      })
-      let ret = await updateData(params)
+      this.dataForm.id = this.curId
+      let ret = await updateData(this.dataForm)
       if (ret) {
         this.$Message.success('添加成功')
         this.initData()
@@ -172,6 +188,9 @@ export default {
       } else {
         this.$Message.error('删除失败')
       }
+    },
+    changePage (page) {
+      this.page = page
     },
     handleAdd () {
       this.addModal = true
@@ -208,5 +227,10 @@ export default {
       font-size: 16px;
       margin-top: 3px;
     }
+  }
+  .common-table-page {
+    float: right;
+    margin-top: 20px;
+    margin-bottom: 20px;
   }
 </style>

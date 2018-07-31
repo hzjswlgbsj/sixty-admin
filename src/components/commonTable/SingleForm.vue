@@ -83,12 +83,24 @@
 
       <Upload
         class="common-form-upload"
-        :action="action"
-        :data="actionData"
         v-if="mForm.type === formConst.FORM_TYPE_UPLOAD"
-        :on-success="handleSuccess">
-        <Icon type="image" />
-        <span class="common-form-upload-text">上传文件</span>
+        :data="actionData"
+        ref="upload"
+        name="Uploader[imageFile]"
+        :show-upload-list="false"
+        :default-file-list="defaultList"
+        :on-success="handleSuccess"
+        :format="['jpg','jpeg','png']"
+        :max-size="2048"
+        :on-format-error="handleFormatError"
+        :on-exceeded-size="handleMaxSize"
+        :before-upload="handleBeforeUpload"
+        multiple
+        type="drag"
+        :action="action">
+        <div class="common-form-upload-icon">
+            <Icon type="camera" size="20"></Icon>
+        </div>
       </Upload>
 
     </FormItem>
@@ -133,13 +145,44 @@ export default {
         trash: true, // 清空
         help: true
       },
-      action: Api.api2url('admin.upload.upload_file'),
-      tagsData: []
+      action: Api.api2url('upload.picture'),
+      tagsData: [],
+      defaultList: [
+        {
+          'name': 'a42bdcc1178e62b4694c830f028db5c0',
+          'url': 'https://o5wwk8baw.qnssl.com/a42bdcc1178e62b4694c830f028db5c0/avatar'
+        },
+        {
+          'name': 'bc7521e033abdd1e92222d733590f104',
+          'url': 'https://o5wwk8baw.qnssl.com/bc7521e033abdd1e92222d733590f104/avatar'
+        }
+      ],
+      uploadList: []
     }
   },
 
   created () {
     this.initData()
+  },
+
+  watch: {
+    value: {
+      deep: true,
+      handler: function (v) {
+        if (this.form.type === Form.FORM_TYPE_ARRAY || this.form.type === Form.FORM_TYPE_OBJECT) {
+          this.mData = JSON.stringify(v)
+        } else {
+          this.mData = v
+        }
+        // this.mData = v
+      }
+    },
+    form: {
+      deep: true,
+      handler: function (v) {
+        this.mForm = v
+      }
+    }
   },
 
   computed: {
@@ -180,35 +223,40 @@ export default {
         this.$emit('on-change', this.mData)
       }
     },
-    handleSuccess (response, file) {
-      if (response && response.data) {
-        let src = response.data.data.url
-        this.currentValue += `[${file.name}](${src})`
-        this.$Message.success('文件上传成功')
+    handleSuccess (response) {
+      console.log('图片上传成功response', response)
+      if (response) {
+        let src = response.url
+        this.currentValue += `[${response.name}](${src})`
+        this.$Message.success('图片上传成功')
       } else {
-        this.$Message.error('图片上传成功')
-      }
-    }
-  },
-
-  watch: {
-    value: {
-      deep: true,
-      handler: function (v) {
-        if (this.form.type === Form.FORM_TYPE_ARRAY || this.form.type === Form.FORM_TYPE_OBJECT) {
-          this.mData = JSON.stringify(v)
-        } else {
-          this.mData = v
-        }
-        // this.mData = v
+        this.$Message.error('图片上传失败')
       }
     },
-    form: {
-      deep: true,
-      handler: function (v) {
-        this.mForm = v
+    handleFormatError (file) {
+      this.$Notice.warning({
+        title: 'The file format is incorrect',
+        desc: 'File format of ' + file.name + ' is incorrect, please select jpg or png.'
+      })
+    },
+    handleMaxSize (file) {
+      this.$Notice.warning({
+        title: 'Exceeding file size limit',
+        desc: 'File  ' + file.name + ' is too large, no more than 2M.'
+      })
+    },
+    handleBeforeUpload () {
+      const check = this.uploadList.length < 5
+      if (!check) {
+        this.$Notice.warning({
+          title: 'Up to five pictures can be uploaded.'
+        })
       }
+      return check
     }
+  },
+  mounted () {
+    this.uploadList = this.$refs.upload && this.$refs.upload.fileList
   }
 }
 </script>
@@ -224,13 +272,13 @@ export default {
     white-space: normal;
   }
   .common-form-upload {
-    cursor: pointer;
-    font-size: 14px;
-    color: #1B69B6;
-    text-align: right;
-    margin: 0 20px;
-    border-top: 1px solid #E4E4E4;
-    height: 33px;
+    display: inline-block;
+    width:58px;
+  }
+  .common-form-upload-icon {
+    width: 58px;
+    height:58px;
+    line-height: 58px;
   }
   .common-form-tag {
     margin-left: 10px;

@@ -7,12 +7,11 @@
 import { Api } from '../common'
 
 export function upload (file) {
-  return Api.call('admin.upload.upload_pic', file)
+  return Api.call('upload.picture', file)
 }
 
-export function uploadByBase64 (base64, appkey) {
-  return Api.call('admin.upload.img_by_base64', {
-    base64,
-    appkey
+export function uploadByBase64 (base64) {
+  return Api.call('upload.base64', {
+    base64
   })
 }

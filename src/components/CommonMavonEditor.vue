@@ -19,6 +19,7 @@
         :action="action"
         :data="actionData"
         :show-upload-list="false"
+        name="Uploader[imageFile]"
         :on-success="handleSuccess">
         <Icon type="image" />
         <span class="common-mavon-editor-upload-text">上传文件</span>
@@ -69,7 +70,7 @@ export default {
       currentValue: this.value,
       currentLanguage: this.language,
       toolbars: this.toolbarDefine,
-      action: Api.api2url('admin.upload.upload_file')
+      action: Api.api2url('upload.picture')
     }
   },
   watch: {
@@ -106,9 +107,9 @@ export default {
     async uploadImgFromPaste (pos, file) {
       let dataBase64 = file.miniurl
       let ret = await uploadByBase64(dataBase64) // 改成你自己的上传接口
-      if (ret && ret.data && ret.data.url) {
+      if (ret && ret.url) {
         this.$Message.success('图片上传成功')
-        return ret.data.url
+        return ret.url
       } else {
         this.$Message.error('图片上传失败，请重新操作')
         this.$refs.mavonEditor.$imgDelByFilename(pos)
@@ -122,10 +123,9 @@ export default {
       this.$emit('input', event)
       this.$emit('on-content-change', event)
     },
-    handleSuccess (response, file) {
-      if (response && response.data) {
-        let src = response.data.data.url
-        this.currentValue += `[${file.name}](${src})`
+    handleSuccess (response) {
+      if (response && response.url) {
+        this.currentValue += `[${response.name}](${response.url})`
         this.$Message.success('文件上传成功')
       } else {
         this.$Message.error('图片上传成功')

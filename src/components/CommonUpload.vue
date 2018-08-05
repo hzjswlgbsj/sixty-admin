@@ -5,7 +5,7 @@
         <img :src="item.url">
         <div class="demo-upload-list-cover">
           <Icon type="ios-eye-outline" @click.native="handleView(item.url)"></Icon>
-          <Icon type="ios-trash-outline" @click.native="handleRemove(item)"></Icon>
+          <Icon type="ios-trash-outline" @click.native="handleRemove(index)"></Icon>
         </div>
       </template>
       <template v-else>
@@ -88,7 +88,7 @@ export default {
 
   methods: {
     handleSuccess (response) {
-      console.log('图片上传成功', response)
+      // console.log('图片上传成功', response)
       if (response && response.url) {
         this.defaultList.push(response)
         this.$Message.success('图片上传成功')
@@ -100,9 +100,8 @@ export default {
       this.curViewImage = url
       this.visible = true
     },
-    handleRemove (file) {
-      const fileList = this.$refs.upload.fileList
-      this.$refs.upload.fileList.splice(fileList.indexOf(file), 1)
+    handleRemove (index) {
+      this.defaultList.splice(index, 1)
     },
     handleFormatError (file) {
       this.$Notice.warning({
@@ -126,13 +125,15 @@ export default {
       return check
     },
     setCurrentValue (value) {
-      if (value) {
-        try {
-          if (value === JSON.stringify(this.defaultList)) return
-          this.defaultList = JSON.parse(value)
-        } catch (error) {
-          console.log(error)
-        }
+      if (!value) {
+        this.defaultList = []
+        return
+      }
+      try {
+        if (value === JSON.stringify(this.defaultList)) return
+        this.defaultList = JSON.parse(value)
+      } catch (error) {
+        console.log(error)
       }
     }
   }

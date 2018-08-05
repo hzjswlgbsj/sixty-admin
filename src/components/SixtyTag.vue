@@ -360,7 +360,8 @@ export default {
     vertical-align: middle;
   }
   .comp_tags_Txt {
-    background-color: #A1D5FA;
+    background-color: #F0AD4E;
+    color: #ffffff;
     border-radius: 16px;
     padding: 5px 8px;
     margin-right: 5px;

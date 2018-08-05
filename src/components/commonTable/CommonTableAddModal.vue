@@ -1,6 +1,7 @@
 <template>
   <div>
     <Modal
+      :transfer="false"
       v-model="visible"
       title="添加模板"
       @on-ok="addEventHandle"

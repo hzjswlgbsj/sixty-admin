@@ -4,12 +4,11 @@
  * Date: 2018/7/10
  * Time: 上午11:19
  */
-import { Api } from '../common'
-import config from '../config'
+import { Api, Store } from '../common'
 import _ from 'lodash'
 
 function _getApi (type, params) {
-  let curApi = _.find(config.apis, {'type': type})
+  let curApi = _.find(Store.store('curConfig').apis, {'type': type})
   if (curApi && curApi.name) {
     return Api.call(curApi.name, params)
   } else {

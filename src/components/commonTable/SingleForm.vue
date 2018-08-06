@@ -164,7 +164,8 @@ export default {
       await this.initTags()
     },
     async initTags () {
-      this.tagsData = await getRemoteTag()
+      let ret = await getRemoteTag()
+      this.tagsData = ret.items
     },
     async addOriginTag (data) {
       let ret = await addRemoteTag(data.addTagName, data.addTagColor)

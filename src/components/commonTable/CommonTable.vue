@@ -155,16 +155,20 @@ export default {
   methods: {
     async initData () {
       let ret = await getRemoteData(this.page, this.limit)
-      this.remoteData = ret.items
-      this.total = ret.total
+      if (ret) {
+        this.remoteData = ret.items
+        this.total = ret.total
+      } else {
+        this.$Message.error('获取数据失败')
+      }
     },
     async executeAddEvent (addForm) {
       this.dataForm = addForm
-      if (!addForm.title || !addForm.introduction || !addForm.content) {
-        this.$Message.error('请填写必填字段')
-        this.addButtonLoading = false
-        return
-      }
+      // if (!addForm.title || !addForm.introduction || !addForm.content) {
+      //   this.$Message.error('请填写必填字段')
+      //   this.addButtonLoading = false
+      //   return
+      // }
       this.dataForm.id = this.curId
       let ret = await updateData(this.dataForm)
       if (ret) {

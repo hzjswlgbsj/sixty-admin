@@ -8,7 +8,8 @@
 
 <script>
 import CommonTable from '../components/commonTable/CommonTable'
-import tableConfig from '../config'
+import tableConfig from '../config/article'
+import { Store } from '../common'
 export default {
   name: 'Article',
   components: {
@@ -18,6 +19,9 @@ export default {
     return {
       config: tableConfig
     }
+  },
+  created () {
+    Store.store('curConfig', this.config)
   }
 }
 </script>

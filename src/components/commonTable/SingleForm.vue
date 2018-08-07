@@ -21,6 +21,7 @@
         v-model="mData"
         placeholder="请输入" />
       <i-input
+        :autosize="true"
         @on-change=change
         v-if="mForm.type === formConst.FORM_TYPE_ARRAY || mForm.type === formConst.FORM_TYPE_OBJECT || mForm.type === formConst.FORM_TYPE_TEXTAREA"
         v-model="mData"

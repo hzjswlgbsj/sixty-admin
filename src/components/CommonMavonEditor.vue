@@ -20,10 +20,26 @@
         :data="actionData"
         :show-upload-list="false"
         name="Uploader[imageFile]"
-        :on-success="handleSuccess">
-        <Icon type="image" />
-        <span class="common-mavon-editor-upload-text">上传文件</span>
-      </Upload>
+        :on-success="handleSuccess" />
+      <div class="common-mavon-editor-upload-buttom">
+        <div class="common-mavon-editor-upload-notice">
+          <icon
+            v-if="uploadState !== 'normal'"
+            class="common-mavon-editor-upload-notice-icon"
+            :name="uploadNotice.icon"
+            :pulse="uploadNotice.pulse"/>
+          <img
+            v-else
+            class="common-mavon-editor-upload-notice-icon"
+            style="width: 16px; height: 16px;"
+            src="../style/iconfont/markdown.svg">
+          <span :style="uploadText">{{ uploadNotice.text }}</span>
+        </div>
+        <div class="common-mavon-editor-upload-icon-text">
+          <Icon type="image" />
+          <span class="common-mavon-editor-upload-text">上传文件</span>
+        </div>
+      </div>
     </div>
   </div>
 </template>
@@ -34,6 +50,25 @@ import { uploadByBase64 } from '../services/upload'
 import { mavonEditor } from 'mavon-editor'
 import 'mavon-editor/dist/css/index.css'
 
+const UPLOAD_NOTICES = {
+  normal: {
+    icon: '',
+    text: 'Markdown is supported'
+  },
+  uploading: {
+    icon: 'spinner',
+    pulse: true,
+    text: 'Uploding your files...'
+  },
+  succeeded: {
+    icon: 'grin-wink',
+    text: 'File upload succeeded'
+  },
+  failed: {
+    icon: 'sad-tear',
+    text: 'File upload failed，please try again'
+  }
+}
 export default {
   name: 'CommonMavonEditor',
   components: {
@@ -70,7 +105,8 @@ export default {
       currentValue: this.value,
       currentLanguage: this.language,
       toolbars: this.toolbarDefine,
-      action: Api.api2url('upload.picture')
+      action: Api.api2url('upload.picture'),
+      uploadState: 'normal'
     }
   },
   watch: {
@@ -81,6 +117,21 @@ export default {
   computed: {
     actionData: function () {
       return {
+      }
+    },
+    uploadNotice () {
+      console.log(66666666666, UPLOAD_NOTICES[this.uploadState])
+      return UPLOAD_NOTICES[this.uploadState]
+    },
+    uploadText () {
+      if (this.uploadState === 'failed') {
+        return {
+          color: 'red',
+          marginLeft: '20px'
+        }
+      }
+      return {
+        marginLeft: '20px'
       }
     }
   },
@@ -105,13 +156,17 @@ export default {
      * @return {String} 返回图片地址
      */
     async uploadImgFromPaste (pos, file) {
+      this.uploadState = 'uploading'
       let dataBase64 = file.miniurl
       let ret = await uploadByBase64(dataBase64) // 改成你自己的上传接口
       if (ret && ret.url) {
-        this.$Message.success('图片上传成功')
+        this.uploadState = 'succeeded'
+        setTimeout(() => {
+          this.uploadState = 'normal'
+        }, 2000)
         return ret.url
       } else {
-        this.$Message.error('图片上传失败，请重新操作')
+        this.uploadState = 'failed'
         this.$refs.mavonEditor.$imgDelByFilename(pos)
       }
     },
@@ -124,11 +179,21 @@ export default {
       this.$emit('on-content-change', event)
     },
     handleSuccess (response) {
+      this.uploadState = 'uploading'
       if (response && response.url) {
-        this.currentValue += `[${response.name}](${response.url})`
-        this.$Message.success('文件上传成功')
+        const curFileSuffix = response.name.split('.')[1]
+        const imageSuffix = ['png', 'jpg', 'jpeg']
+        if (imageSuffix.indexOf(curFileSuffix) !== -1) {
+          this.currentValue += `![${response.name}](${response.url})`
+        } else {
+          this.currentValue += `[${response.name}](${response.url})`
+        }
+        this.uploadState = 'succeeded'
+        setTimeout(() => {
+          this.uploadState = 'normal'
+        }, 2000)
       } else {
-        this.$Message.error('图片上传成功')
+        this.uploadState = 'failed'
       }
     },
     setCurrentValue (value) {
@@ -147,10 +212,25 @@ export default {
   .common-mavon-editor-upload {
     cursor: pointer;
     font-size: 14px;
-    color: #1B69B6;
     text-align: right;
     margin: 0 20px;
     border-top: 1px solid #E4E4E4;
     height: 33px;
+  }
+  .common-mavon-editor-upload-buttom {
+    display: flex;
+    justify-content: space-between;
+    margin-top: -33px;
+  }
+  .common-mavon-editor-upload-notice {
+    position: relative;
+  }
+  .common-mavon-editor-upload-notice-icon {
+    position: absolute;
+    top: 8px;
+  }
+  .common-mavon-editor-upload-icon-text {
+    color: #1B69B6;
+    /* padding-top: 5px; */
   }
 </style>

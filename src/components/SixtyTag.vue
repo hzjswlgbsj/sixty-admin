@@ -23,7 +23,7 @@
             <input v-model="searchTag" @input="searchTags" placeholder="搜索标签" />
           </div>
           <div>
-            <Icon class="search_add_icon" type="ios-plus-outline" @click.native="addTag" size="18"></Icon>
+            <Icon class="search_add_icon" type="ios-plus-outline" @click.native="handleAddTag" size="18"></Icon>
           </div>
         </div>
         <div class="tags_list">
@@ -36,7 +36,7 @@
               <div class="tag_list_dot">&nbsp;&nbsp;</div>
               {{tag.name}}
               <div class="tag_list_operation_btns">
-                <Icon v-if="currentEditIdx === index" @click.native="editTag(tag)" size="14" class="tag_list_operation_edit" type="edit"></Icon>
+                <Icon v-if="currentEditIdx === index" @click.native="handleEditTag(tag)" size="14" class="tag_list_operation_edit" type="edit"></Icon>
                 <Icon v-if="tag.existInItem" size="14" type="checkmark-round"></Icon>
               </div>
             </li>
@@ -191,13 +191,13 @@ export default {
       this.showAddModal = true
       this.showSelectContent = true
     },
-    /* 添加源数据标签 */
-    addTag (e) {
+    /* 切换到添加源数据标签的页面 */
+    handleAddTag (e) {
       this.searchTag ? this.addTagName = this.searchTag : this.addTagName = ''
       this.showSelectContent = false
     },
-    /* 编辑源数据标签 */
-    editTag (tag) {
+    /* 切换到编辑源数据标签的页面 */
+    handleEditTag (tag) {
       this.showSelectContent = false
       this.panelText = '编辑标签'
       this.addTagId = tag.id

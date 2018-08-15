@@ -22,4 +22,8 @@ export default {
   bottom: 0;
   width: 100%;
 }
+/* 对iview的upload组件的样式覆盖 */
+#ivu-upload .ivu-upload-select {
+  display: initial !important;
+}
 </style>

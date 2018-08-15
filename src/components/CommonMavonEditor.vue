@@ -16,30 +16,33 @@
       v-if="defaultOpen === 'edit'"
       class="common-mavon-editor-upload">
       <Upload
+        id="ivu-upload"
         :action="action"
         :data="actionData"
         :show-upload-list="false"
         name="Uploader[imageFile]"
-        :on-success="handleSuccess" />
-      <div class="common-mavon-editor-upload-buttom">
-        <div class="common-mavon-editor-upload-notice">
-          <icon
-            v-if="uploadState !== 'normal'"
-            class="common-mavon-editor-upload-notice-icon"
-            :name="uploadNotice.icon"
-            :pulse="uploadNotice.pulse"/>
-          <img
-            v-else
-            class="common-mavon-editor-upload-notice-icon"
-            style="width: 16px; height: 16px;"
-            src="../style/iconfont/markdown.svg">
-          <span :style="uploadText">{{ uploadNotice.text }}</span>
+        :on-progress="handleProgress"
+        :on-success="handleSuccess" >
+        <div class="common-mavon-editor-upload-buttom">
+          <div class="common-mavon-editor-upload-notice">
+            <icon
+              v-if="uploadState !== 'normal'"
+              class="common-mavon-editor-upload-notice-icon"
+              :name="uploadNotice.icon"
+              :pulse="uploadNotice.pulse"/>
+            <img
+              v-else
+              class="common-mavon-editor-upload-notice-icon"
+              style="width: 16px; height: 16px;"
+              src="../style/iconfont/markdown.svg">
+            <span :style="uploadText">{{ uploadNotice.text }}</span>
+          </div>
+          <div class="common-mavon-editor-upload-icon-text">
+            <Icon type="image" />
+            <span class="common-mavon-editor-upload-text">上传文件</span>
+          </div>
         </div>
-        <div class="common-mavon-editor-upload-icon-text">
-          <Icon type="image" />
-          <span class="common-mavon-editor-upload-text">上传文件</span>
-        </div>
-      </div>
+      </Upload>
     </div>
   </div>
 </template>
@@ -93,7 +96,7 @@ export default {
     },
     codeStyle: {
       type: String,
-      default: 'androidstudio'
+      default: 'atom-one-dark'
     },
     toolbarsFlag: {
       type: Boolean,
@@ -178,6 +181,9 @@ export default {
       this.$emit('input', event)
       this.$emit('on-content-change', event)
     },
+    handleProgress () {
+      this.uploadState = 'uploading'
+    },
     handleSuccess (response) {
       this.uploadState = 'uploading'
       if (response && response.url) {
@@ -220,14 +226,13 @@ export default {
   .common-mavon-editor-upload-buttom {
     display: flex;
     justify-content: space-between;
-    margin-top: -33px;
   }
   .common-mavon-editor-upload-notice {
     position: relative;
   }
   .common-mavon-editor-upload-notice-icon {
     position: absolute;
-    top: 8px;
+    top: 7px;
   }
   .common-mavon-editor-upload-icon-text {
     color: #1B69B6;

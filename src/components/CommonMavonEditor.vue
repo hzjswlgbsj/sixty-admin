@@ -123,7 +123,6 @@ export default {
       }
     },
     uploadNotice () {
-      console.log(66666666666, UPLOAD_NOTICES[this.uploadState])
       return UPLOAD_NOTICES[this.uploadState]
     },
     uploadText () {

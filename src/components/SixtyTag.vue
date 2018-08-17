@@ -180,7 +180,7 @@ export default {
       if (this.searchTag) {
         let allTags = this.allTagsBack
         this.allTags = allTags && allTags.filter(item => {
-          return item.name.indexOf(this.searchTag) !== -1
+          return item.name.toLowerCase().indexOf(this.searchTag.toLowerCase()) !== -1
         })
       } else {
         this.allTags = this.allTagsBack
@@ -251,7 +251,7 @@ export default {
         this.showTips = true
       } else {
         for (let i = 0; i < this.allTags.length; i++) {
-          if (this.allTags[i].name === this.addTagName) {
+          if (this.allTags[i].name.toLowerCase() === this.addTagName.toLowerCase()) {
             Message.error('该标签已经存在')
             return
           }

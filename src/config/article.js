@@ -44,6 +44,10 @@ export default {
       key: 'nickname'
     },
     {
+      title: '网易云音乐',
+      key: 'music_id'
+    },
+    {
       title: '标签',
       key: 'tag_ids'
     },
@@ -61,6 +65,11 @@ export default {
     {
       key: 'nickname',
       label: '文章作者:',
+      type: form.FORM_TYPE_STRING
+    },
+    {
+      key: 'music_id',
+      label: '网易云音乐',
       type: form.FORM_TYPE_STRING
     },
     {

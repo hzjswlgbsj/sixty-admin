@@ -10,9 +10,10 @@ export function getArticle () {
   return Api.call('article.all')
 }
 
-export function addArticle (title, categoryId, introduction, nickname, coverPicture, content, tagIds, id) {
+export function addArticle (title, musicId, categoryId, introduction, nickname, coverPicture, content, tagIds, id) {
   return Api.call('article.add', {
     title,
+    music_id: musicId,
     category_id: categoryId,
     introduction,
     nickname,

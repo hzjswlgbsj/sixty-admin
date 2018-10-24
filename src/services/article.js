@@ -15,9 +15,9 @@ export async function getArticles () {
   }
 }
 
-export async function articleAdd (title, categoryId, introduction, nickname, coverPicture, content, tagIds, id) {
+export async function articleAdd (title, musicId, categoryId, introduction, nickname, coverPicture, content, tagIds, id) {
   try {
-    let ret = await addArticle(title, categoryId, introduction, nickname, coverPicture, content, tagIds, id)
+    let ret = await addArticle(title, musicId, categoryId, introduction, nickname, coverPicture, content, tagIds, id)
     ret && Message.success('添加成功')
     return ret
   } catch (e) {

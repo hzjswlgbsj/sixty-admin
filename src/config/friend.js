@@ -71,6 +71,18 @@ export default {
     {
       key: 'color',
       label: '标签颜色:',
+      type: form.FORM_TYPE_ENUM,
+      options: [
+        {label: '紫色', value: 'purple'},
+        {label: '蓝色', value: 'blue'},
+        {label: '白色', value: 'white'},
+        {label: '黄色', value: 'yellow'},
+        {label: '绿色', value: 'green'}
+      ]
+    },
+    {
+      key: 'logo_url',
+      label: 'logo链接:',
       type: form.FORM_TYPE_STRING
     }
   ]

@@ -10,18 +10,23 @@ export default {
   apis: [
     {
       type: 'all', // 类型，用于区分是什么类型的接口
-      name: 'link.all', // 接口字符串
+      name: 'comment.all', // 接口字符串
       params: [
         {
           name: 'type',
           type: String,
-          default: 'link'
+          default: 'message'
+        },
+        {
+          name: 'article_id',
+          type: Number,
+          default: -1
         }
       ]
     },
     {
-      type: 'update',
-      name: 'link.add'
+      type: 'delete',
+      name: 'comment.delete'
     }
   ],
   columns: [

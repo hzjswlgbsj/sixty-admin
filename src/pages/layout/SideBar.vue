@@ -32,6 +32,10 @@ export default {
       currentOpens: [0]
     }
   },
+  created () {
+    this.activePath = this.$route.path
+    this.getOpenIndex()
+  },
   methods: {
     handleChange (path) {
       this.activePath = path
@@ -39,6 +43,15 @@ export default {
     },
     handleOpenChange (open) {
       this.currentOpens = open
+    },
+    getOpenIndex () {
+      this.sideMenuData.map((item, index) => {
+        item.children.map(subItem => {
+          if (subItem.path === this.activePath) {
+            this.currentOpens = [index]
+          }
+        })
+      })
     }
   }
 }

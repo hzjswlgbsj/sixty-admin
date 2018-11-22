@@ -36,58 +36,25 @@ export default {
       align: 'center'
     },
     {
-      title: '名称',
-      key: 'nickname'
+      title: '内容',
+      key: 'content'
     },
     {
-      title: '描述',
-      key: 'description'
+      title: '文章',
+      key: 'article_id'
     },
     {
-      title: 'URL',
-      key: 'link'
+      title: '评论类型',
+      key: 'type'
     },
     {
-      title: '颜色',
-      key: 'color'
+      title: '评论人',
+      key: 'user_nickname'
     },
     {
       title: '创建时间',
       key: 'create_time'
     }
   ],
-  form: [
-    {
-      key: 'nickname',
-      label: '标签名称:',
-      type: form.FORM_TYPE_STRING
-    },
-    {
-      key: 'description',
-      label: '描述:',
-      type: form.FORM_TYPE_STRING
-    },
-    {
-      key: 'link',
-      label: '连接:',
-      type: form.FORM_TYPE_STRING
-    },
-    {
-      key: 'color',
-      label: '标签颜色:',
-      type: form.FORM_TYPE_ENUM,
-      options: [
-        {label: '紫色', value: 'purple'},
-        {label: '蓝色', value: 'blue'},
-        {label: '白色', value: 'white'},
-        {label: '黄色', value: 'yellow'},
-        {label: '绿色', value: 'green'}
-      ]
-    },
-    {
-      key: 'logo_url',
-      label: 'logo链接:',
-      type: form.FORM_TYPE_STRING
-    }
-  ]
+  form: []
 }

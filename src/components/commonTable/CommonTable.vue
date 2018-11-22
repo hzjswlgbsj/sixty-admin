@@ -155,6 +155,7 @@ export default {
   methods: {
     async initData () {
       let ret = await getRemoteData(this.page, this.limit)
+      console.log(1111111, ret)
       if (ret) {
         this.remoteData = ret.items
         this.total = ret.total

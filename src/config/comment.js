@@ -4,7 +4,6 @@
  * Date: 2018/11/15
  * Time: 9:12 AM
  */
-import form from '../const/form'
 
 export default {
   apis: [

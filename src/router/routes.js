@@ -1,4 +1,5 @@
 import {
+  ROUTE_NAME_LOGIN, ROUTE_PATH_LOGIN,
   ROUTE_NAME_ARTICLE, ROUTE_PATH_ARTICLE,
   ROUTE_NAME_ARTICLE_PUBLISH, ROUTE_PATH_ARTICLE_PUBLISH,
   ROUTE_NAME_COMMENT, ROUTE_PATH_COMMENT,
@@ -14,6 +15,7 @@ import {
 } from './const'
 import Index from '../pages/Index'
 import Article from '../pages/Article'
+import Login from '../pages/Login'
 import ArticlePublish from '../pages/ArticlePublish'
 import ArticleComment from '../pages/ArticleComment'
 import ArticleTag from '../pages/ArticleTag'
@@ -94,5 +96,10 @@ export default [
         component: WebsiteStatistics
       }
     ]
+  },
+  {
+    path: ROUTE_PATH_LOGIN,
+    name: ROUTE_NAME_LOGIN,
+    component: Login
   }
 ]

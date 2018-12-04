@@ -6,6 +6,7 @@
  */
 
 /* ---------------------ROUTE NAME------------------------- */
+export const ROUTE_NAME_LOGIN = 'login'
 export const ROUTE_NAME_ARTICLE = 'article'
 export const ROUTE_NAME_ARTICLE_PUBLISH = 'publish'
 export const ROUTE_NAME_COMMENT = 'comment'
@@ -24,6 +25,7 @@ export const ROUTE_NAME_ERROR_404 = 'error/404'
 export const ROUTE_NAME_ERROR_500 = 'error/500'
 
 /* ---------------------ROUTE PATH------------------------- */
+export const ROUTE_PATH_LOGIN = '/login'
 export const ROUTE_PATH_ARTICLE = '/article'
 export const ROUTE_PATH_ARTICLE_PUBLISH = '/article_publish'
 export const ROUTE_PATH_COMMENT = '/comment'

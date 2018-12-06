@@ -24,6 +24,7 @@
 </template>
 
 <script>
+import { userLogin } from '../services/user'
 export default {
   name: 'Login',
   data () {
@@ -45,20 +46,31 @@ export default {
     }
   },
   methods: {
-    handleSubmit () {
+    async handleSubmit () {
       if (!this.formInline.user) {
         this.$Message.error('请输入用户名')
         return
       }
-      if (!this.formInline.user) {
+      if (!this.formInline.password) {
         this.$Message.error('请输入密码')
         return
       }
       this.loading = true
-      setTimeout( () => {
+      try {
+        let ret = await userLogin(this.formInline.user, this.formInline.password)
+        console.log(ret)
+        if (ret && ret.id) {
+          this.$Message.success('登录成功')
+          this.loading = false
+        } else {
+          this.loading = false
+          setTimeout(() => {
+            this.$Message.error('登录失败')
+          }, 1000)
+        }
+      } catch (e) {
         this.loading = false
-      }, 1000)
-      console.log(this.formInline)
+      }
     }
   }
 }

@@ -25,8 +25,11 @@
 
 <script>
 import { userLogin } from '../services/user'
+import { Cookie, Message } from '../common'
+
 export default {
   name: 'Login',
+
   data () {
     return {
       formInline: {
@@ -45,6 +48,12 @@ export default {
       }
     }
   },
+
+  created () {
+    const userData = Cookie.get('sixtydenAmdinUser')
+    if (userData && userData.id) this.redirectArticle()
+  },
+
   methods: {
     async handleSubmit () {
       if (!this.formInline.user) {
@@ -57,20 +66,26 @@ export default {
       }
       this.loading = true
       try {
-        let ret = await userLogin(this.formInline.user, this.formInline.password)
-        console.log(ret)
-        if (ret && ret.id) {
-          this.$Message.success('登录成功')
+        let user = await userLogin(this.formInline.user, this.formInline.password)
+        if (!user || !user.id) {
+          Message.error('登录失败')
+          return
+        }
+        Cookie.set('sixtydenAmdinUser', user)
+        const userData = Cookie.get('sixtydenAmdinUser')
+        if (userData && userData.id) {
+          Message.success('登录成功')
           this.loading = false
-        } else {
-          this.loading = false
-          setTimeout(() => {
-            this.$Message.error('登录失败')
-          }, 1000)
+          this.redirectArticle()
         }
       } catch (e) {
         this.loading = false
+        Message.error('登录失败')
       }
+    },
+
+    redirectArticle () {
+      this.$router.push('/article')
     }
   }
 }

@@ -14,8 +14,8 @@
           <Icon type="arrow-down-b"></Icon>
         </a>
         <DropdownMenu slot="list">
-          <DropdownItem>个人中心</DropdownItem>
-          <DropdownItem>退出登录</DropdownItem>
+          <DropdownItem @click.native="handleUcenter">个人中心</DropdownItem>
+          <DropdownItem @click.native="handleLogout">退出登录</DropdownItem>
         </DropdownMenu>
       </Dropdown>
     </div>
@@ -24,11 +24,24 @@
 
 <script>
 import { SIXTY_LOGO } from '../../const'
+import { Cookie } from '../../common'
+
 export default {
   name: 'top-bar',
+
   data () {
     return {
       sixtyLogo: SIXTY_LOGO
+    }
+  },
+
+  methods: {
+    handleLogout () {
+      Cookie.set('sixtydenAmdinUser', null)
+      this.$router.push('/login')
+    },
+    handleUcenter () {
+      this.$router.push('/website')
     }
   }
 }

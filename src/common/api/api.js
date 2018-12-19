@@ -44,7 +44,7 @@ function _call (api, params) {
       return Promise.reject(new Error(
         {
           code: -1,
-          msg: 'network error reponse'
+          msg: 'network error response'
         }
       ))
     }

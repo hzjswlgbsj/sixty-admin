@@ -68,6 +68,7 @@ export default {
       try {
         let user = await userLogin(this.formInline.user, this.formInline.password)
         if (!user || !user.id) {
+          this.loading = false
           Message.error('登录失败')
           return
         }

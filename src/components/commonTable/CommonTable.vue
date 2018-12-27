@@ -177,6 +177,7 @@ export default {
         this.addModal = false
       } else {
         this.$Message.error('添加失败')
+        this.addButtonLoading = false
       }
     },
     async executeDeleteEvent (id) {

@@ -9,10 +9,10 @@
             @mouseout="hideCloseIc"
             @mouseover="showCloseIc(idx)">{{tag.name}}
         <transition name="slide-fade">
-          <Icon v-if="currentIdx === idx" @click.native="deleteLocalTag(idx, tag)" class="comp_tags_Txt_close" type="close-circled"></Icon>
+          <Icon v-if="currentIdx === idx" @click.native="deleteLocalTag(idx, tag)" class="comp_tags_Txt_close" type="md-close"></Icon>
         </transition>
       </span>
-      <Icon class="comp_tags_addIcon" v-if="tagsLocal && tagsLocal.length > 0" type="ios-plus-outline" @click.native="addLocalTag" size="16"></Icon>
+      <Icon class="comp_tags_addIcon" v-if="tagsLocal && tagsLocal.length > 0" type="ios-add-circle-outline" @click.native="addLocalTag" size="16"></Icon>
     </div>
 
     <div class="tags_model" ref="tagModel" v-if="showAddModal">
@@ -23,7 +23,7 @@
             <input v-model="searchTag" @input="searchTags" placeholder="搜索标签" />
           </div>
           <div>
-            <Icon class="search_add_icon" type="ios-plus-outline" @click.native="handleAddTag" size="18"></Icon>
+            <Icon class="search_add_icon" type="ios-add-circle-outline" @click.native="handleAddTag" size="18"></Icon>
           </div>
         </div>
         <div class="tags_list">
@@ -36,8 +36,8 @@
               <div class="tag_list_dot">&nbsp;&nbsp;</div>
               {{tag.name}}
               <div class="tag_list_operation_btns">
-                <Icon v-if="currentEditIdx === index" @click.native="handleEditTag(tag)" size="14" class="tag_list_operation_edit" type="edit"></Icon>
-                <Icon v-if="tag.existInItem" size="14" type="checkmark-round"></Icon>
+                <Icon v-if="currentEditIdx === index" @click.native="handleEditTag(tag)" size="14" class="tag_list_operation_edit" type="md-create"></Icon>
+                <Icon v-if="tag.existInItem" size="14" type="md-checkmark"></Icon>
               </div>
             </li>
           </ul>
@@ -50,9 +50,9 @@
       <!--添加界面的内容-->
       <div v-if="!showSelectContent">
         <div class="add_operation_btn">
-          <Icon style="color: #A9A9A9" type="chevron-left" @click.native="returnSelectTag"></Icon>
+          <Icon class="add_operation_icon" type="ios-arrow-back" @click.native="returnSelectTag"></Icon>
           {{panelText}}
-          <Icon style="color: #A9A9A9" type="close-round" @click.native="closeSelectModal"></Icon>
+          <Icon class="add_operation_icon" type="md-close" @click.native="closeSelectModal"></Icon>
         </div>
         <div style="margin: 20px;">
           <div class="add_tag_content"><input v-model="addTagName" placeholder="标签名称" /></div>
@@ -446,6 +446,13 @@ export default {
     padding: 0 15px;
     color: #000;
     font-size: 14px;
+  }
+  .add_operation_icon {
+    color: #A9A9A9;
+    cursor: pointer;
+  }
+  .add_operation_icon:hover {
+    color: #A1D5FA;
   }
   .add_tag_content {
     width: 210px;

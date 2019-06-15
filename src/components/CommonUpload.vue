@@ -34,7 +34,7 @@
       :on-exceeded-size="handleMaxSize"
       :before-upload="handleBeforeUpload">
       <div class="common-form-upload-icon">
-        <Icon type="camera" size="20"></Icon>
+        <Icon type="ios-camera" size="20"></Icon>
       </div>
     </Upload>
   </div>
